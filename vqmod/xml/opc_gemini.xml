@@ -46,7 +46,7 @@
                                  $.ajax({
                                         url: 'index.php?route=extension/module/opc_gemini/getData&user_token={{ user_token }}',
                                         type: 'post',
-                                        data: {gemini_content: product_description.val()},
+                                        data: {gemini_content: product_description.val() + ' html '},
                                         dataType: 'json',
                                         success: function (json) {
                                             $(description).parent('div').loading('stop');
