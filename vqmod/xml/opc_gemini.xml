@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+    <name>Custom Modification for admin/controller/catalog/product.php</name>
+    <code>custom_mod_product</code>
+    <version>1.0</version>
+    <author>Your Name</author>
+    <link>Your Website or Contact Info</link>
+
+
+    <file path="admin/controller/catalog/product.php">
+
+
+        <operation>
+            <search><![CDATA[$this->load->language('catalog/product'); ]]></search>
+
+
+            <add position="after"><![CDATA[
+
+        //opc_gemini
+               $this->document->addStyle('view/javascript/loading/loading.css');
+               $this->document->addScript('view/javascript/loading/jquery.loading.min.js');
+
+
+				]]></add>
+        </operation>
+
+
+
+    </file>
+
+
+
+    <file path="admin/view/template/catalog/product_form.twig">
+        <operation>
+            <search><![CDATA[<script type="text/javascript" src="view/javascript/summernote/opencart.js"></script>]]></search>
+            <add position="after"><![CDATA[
+               <script type="text/javascript">
+
+
+
+                  {% for language in languages %}
+
+                      $('input[name=\'product_description[{{language.language_id}}][name]\']').on('focusout', function() {
+                      var gemini_content = $(this).val();
+                         $('[name="product_description[{{language.language_id}}][description]"]').parent('div').loading();
+                      $.ajax({
+                        url: 'index.php?route=extension/module/opc_gemini/getData&user_token={{ user_token }}',
+                        type: 'post',
+                        data: {gemini_content:gemini_content},
+                        dataType: 'json',
+                        success: function(json) {
+                           $('[name="product_description[{{language.language_id}}][description]"]').parent('div').loading('stop');
+                           $('[name="product_description[{{language.language_id}}][description]"]').summernote('code', json.candidates[0].content.parts[0].text);
+                        },
+                        error:function(request,error)
+                            {
+                                console.lgo("Request: "+JSON.stringify(request));
+                            }
+                      });
+                    });
+
+             {% endfor %}
+
+               </script>
+            ]]></add>
+        </operation>
+        <operation>
+            <search><![CDATA[ <input type="text" name="product_description[{{ language.language_id }}][name]" value="{{ product_description[language.language_id] ? product_description[language.language_id].name }}" placeholder="{{ entry_name }}" id="input-name{{ language.language_id }}" class="form-control"/>]]></search>
+            <add position="after"><![CDATA[
+                    <button type="button"   class="btn btn-primary" data-original-title="Send"><i class="fa fa-info"></i></button>
+            ]]></add>
+        </operation>
+    </file>
+
+</modification>
