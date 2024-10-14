@@ -35,35 +35,98 @@
             <search><![CDATA[<script type="text/javascript" src="view/javascript/summernote/opencart.js"></script>]]></search>
             <add position="after"><![CDATA[
 
-    <script type="text/javascript">
 
 
-        function getGeminiContent(languageID) {
-
-             var product_description = $('input[name="product_description[' + languageID + '][name]"]');
-             var description = $('textarea[name="product_description[' + languageID + '][description]"]');
-             var meta_description = $('textarea[name="product_description[' + languageID + '][meta_description]"]');
-             var meta_title = $('input[name="product_description[' + languageID + '][meta_title]"]');
-             var meta_keyword = $('textarea[name="product_description[' + languageID + '][meta_keyword]"]');
-             var tag = $('input[name="product_description[' + languageID + '][tag]"]');
-             $(description).parent('div').loading();
-             $(meta_description).loading();
-             $(meta_title).loading();
-             $(meta_keyword).loading();
-             $(tag).loading();
+         <script type="text/javascript">
 
 
+        function loadGemini(languageID, languageName, objectName, description) {
+            var product_name = $('#input-name' + languageID);
+            var trimObject = $("#" + objectName + languageID);
+            $(trimObject).parent('div').loading();
+            $.ajax({
+                url: 'index.php?route=extension/module/opc_gemini/getData&user_token={{ user_token }}',
+                type: 'post',
+                data: {gemini_content: $(product_name).val() + description},
+                dataType: 'json',
+                success: function (json) {
+                $(trimObject).parent('div').loading('stop');
+                    let jsonVal = json.candidates[0].content.parts[0].text;
+
+                    if (objectName === "input-description") {
+                        $(trimObject).summernote('code', jsonVal);
+                    } else {
+                        $(trimObject).val(jsonVal);
+                    }
+                },
+                error: function (request, error) {
+                    console.log("Request: " + JSON.stringify(request));
+                }
+            });
         }
 
+
+        $(document).ready(function () {
+
+
+            {% for language in languages %}
+
+            $('#input-name{{ language.language_id }}').parent('div').append($('<button/>')
+                .attr('type', 'button')
+                .text('i')
+                .addClass('btn btn-primary btn-sm')
+                .click(function () {
+                    loadGemini({{ language.language_id }}, "{{ language.name }}", "input-description", " تنسيق html  ");
+                }));
+
+
+            $('#input-meta-title{{ language.language_id }}').parent('div').append($('<button/>')
+                .attr('type', 'button')
+                .text('i')
+                .addClass('btn btn-primary btn-sm')
+                .click(function () {
+                    loadGemini({{ language.language_id }}, "{{ language.name }}", "input-meta-title", "كلمات مفتاحية مفصولة كل كلمة - ");
+                }));
+
+            $('#input-meta-description{{ language.language_id }}').parent('div').append($('<button/>')
+                .attr('type', 'button')
+                .text('i')
+                .addClass('btn btn-primary btn-sm')
+                .click(function () {
+                    loadGemini({{ language.language_id }}, "{{ language.name }}", "input-meta-description", "   وصف ميتا تاج بسيط  ");
+                }));
+
+
+            $('#input-meta-keyword{{ language.language_id }}').parent('div').append($('<button/>')
+                .attr('type', 'button')
+                .text('i')
+                .addClass('btn btn-primary btn-sm')
+                .click(function () {
+                    loadGemini({{ language.language_id }}, "{{ language.name }}", "input-meta-keyword", "  meta keyword  ");
+                }));
+
+
+            $('#input-tag{{ language.language_id }}').parent('div').append($('<button/>')
+                .attr('type', 'button')
+                .text('i')
+                .addClass('btn btn-primary btn-sm')
+                .click(function () {
+                    loadGemini({{ language.language_id }}, "{{ language.name }}", "input-tag", " tag ");
+                }));
+
+
+            console.log("{{ language.name }}", "XXX")
+            {% endfor %}
+
+        })
+
+
     </script>
+
+
             ]]></add>
         </operation>
-        <operation>
-            <search><![CDATA[ <input type="text" name="product_description[{{ language.language_id }}][name]" value="{{ product_description[language.language_id] ? product_description[language.language_id].name }}" placeholder="{{ entry_name }}" id="input-name{{ language.language_id }}" class="form-control"/>]]></search>
-            <add position="after"><![CDATA[
-                    <button type="button" onclick="getGeminiContent({{language.language_id}})"  class="btn btn-primary" data-original-title="Send"><i class="fa fa-info"></i></button>
-            ]]></add>
-        </operation>
+
     </file>
 
 </modification>
