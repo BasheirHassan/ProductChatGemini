@@ -61,6 +61,7 @@
                 },
                 error: function (request, error) {
                     console.log("Request: " + JSON.stringify(request));
+                      $(trimObject).parent('div').loading('stop');
                 }
             });
         }
@@ -76,7 +77,7 @@
                 .text('i')
                 .addClass('btn btn-primary btn-sm')
                 .click(function () {
-                    loadGemini({{ language.language_id }}, "{{ language.name }}", "input-description", " تنسيق html  ");
+                    loadGemini({{ language.language_id }},"{{ language.name }}","input-description", "  وصف بسيط  منسق html body  ");
                 }));
 
 
@@ -111,7 +112,7 @@
                 .text('i')
                 .addClass('btn btn-primary btn-sm')
                 .click(function () {
-                    loadGemini({{ language.language_id }}, "{{ language.name }}", "input-tag", " tag ");
+                    loadGemini({{ language.language_id }}, "{{ language.name }}","input-tag"," كلمات مفتاحية مفصولة كل كلمة بفاصلة  ");
                 }));
 
 
