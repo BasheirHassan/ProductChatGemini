@@ -83,6 +83,7 @@ class ControllerExtensionModuleOpcGemini extends Controller
         $data['column_left'] = $this->load->controller('common/column_left');
         $data['footer'] = $this->load->controller('common/footer');
 
+
         $this->response->setOutput($this->load->view('extension/module/opc_gemini', $data));
     }
 
@@ -101,6 +102,13 @@ class ControllerExtensionModuleOpcGemini extends Controller
         $data['footer'] = $this->load->controller('common/footer');
 
         $this->response->setOutput($this->load->view('extension/module/opc_gemini_user_guide', $data));
+    }
+
+
+ public function get_status()
+    {
+        $result =  $this->config->get('module_opc_gemini_status');
+        echo json_encode(['result'=>$result]);
     }
 
     protected function validate()
