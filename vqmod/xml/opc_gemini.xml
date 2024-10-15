@@ -36,17 +36,17 @@
 
 
          <script type="text/javascript">
-              function loadGemini(languageID, languageName, objectName, description) {
+                    function loadGemini(languageID, languageName, objectName, description) {
                         var product_name = $('#input-name' + languageID);
                         var trimObject = $("#" + objectName + languageID);
                         console.log(trimObject)
 
 
-                          if (objectName === "input-description") {
-                                 $(trimObject).parent('div').loading();
-                                } else {
-                                    $(trimObject).loading();
-                         }
+                        if (objectName === "input-description") {
+                            $(trimObject).parent('div').loading();
+                        } else {
+                            $(trimObject).loading();
+                        }
 
                         $.ajax({
                             url: 'index.php?route=extension/module/opc_gemini/getData&user_token={{ user_token }}',
@@ -55,14 +55,13 @@
                             dataType: 'json',
                             success: function (json) {
 
-                                 if(json.hasOwnProperty('error')){
-                                    alert(json.error);
+                                if (json.hasOwnProperty('error')) {
+                                    alert(json.error.message);
                                     return;
-                                 }
+                                }
 
 
-
-                                 $(trimObject).loading('stop');
+                                $(trimObject).loading('stop');
                                 let jsonVal = json.candidates[0].content.parts[0].text;
 
                                 if (objectName === "input-description") {
@@ -73,83 +72,80 @@
                             },
                             error: function (request, error) {
                                 console.log("Request: " + JSON.stringify(request));
-                                 $(trimObject).loading('stop');
+                                $(trimObject).loading('stop');
                             }
                         });
                     }
 
 
-        $(document).ready(function () {
+                    $(document).ready(function () {
 
 
-            $.getJSON("index.php?route=extension/module/opc_gemini/get_status&user_token={{ user_token }}", function (json) {
-                console.log("JSON Data: " + json.result);
+                        $.getJSON("index.php?route=extension/module/opc_gemini/get_status&user_token={{ user_token }}", function (json) {
+                            console.log("JSON Data: " + json.result);
 
 
-
-                if (json.result == 1) {
-                    {% for language in languages %}
-
-
-
-                        $('#input-name{{ language.language_id }}').parent('div').addClass('input-group').append($('<span/>')
-                        .attr('role', 'button')
-                        .text('!')
-                        .addClass('input-group-addon btn btn-primary btn-sm')
-                        .click(function () {
-                          loadGemini({{ language.language_id }}, "{{ language.name }}", "input-description", "  وصف بسيط  منسق html body  ");
-                        }));
+                            if (json.result == 1) {
+                                {% for language in languages %}
 
 
 
-
-                    $('#input-meta-title{{ language.language_id }}').parent('div').addClass('input-group').append($('<span/>')
-                        .attr('role', 'button')
-                        .text('!')
-                        .addClass('input-group-addon btn btn-primary btn-sm')
-                        .click(function () {
-                            loadGemini({{ language.language_id }}, "{{ language.name }}", "input-meta-title", "كلمات مفتاحية مفصولة كل كلمة - ");
-                        }));
-
-                    $('#input-meta-description{{ language.language_id }}').parent('div').addClass('input-group').append($('<span/>')
-                        .attr('role', 'button')
-                        .text('!')
-                        .addClass('input-group-addon btn btn-primary btn-sm')
-                        .click(function () {
-                            loadGemini({{ language.language_id }}, "{{ language.name }}", "input-meta-description", "   وصف ميتا تاج بسيط  ");
-                        }));
+                                $('#input-name{{ language.language_id }}').parent('div').addClass('input-group').append($('<span/>')
+                                    .attr('role', 'button')
+                                    .text('!')
+                                    .addClass('input-group-addon btn btn-primary btn-sm')
+                                    .click(function () {
+                                        loadGemini({{ language.language_id }}, "{{ language.name }}", "input-description", "  وصف بسيط  منسق html body  ");
+                                    }));
 
 
-                    $('#input-meta-keyword{{ language.language_id }}').parent('div').addClass('input-group').append($('<span/>')
-                        .attr('role', 'button')
-                        .text('!')
-                        .addClass('input-group-addon btn btn-primary btn-sm')
-                        .click(function () {
-                            loadGemini({{ language.language_id }}, "{{ language.name }}", "input-meta-keyword", "  meta keyword  ");
-                        }));
+                                $('#input-meta-title{{ language.language_id }}').parent('div').addClass('input-group').append($('<span/>')
+                                    .attr('role', 'button')
+                                    .text('!')
+                                    .addClass('input-group-addon btn btn-primary btn-sm')
+                                    .click(function () {
+                                        loadGemini({{ language.language_id }}, "{{ language.name }}", "input-meta-title", "كلمات مفتاحية مفصولة كل كلمة - ");
+                                    }));
+
+                                $('#input-meta-description{{ language.language_id }}').parent('div').addClass('input-group').append($('<span/>')
+                                    .attr('role', 'button')
+                                    .text('!')
+                                    .addClass('input-group-addon btn btn-primary btn-sm')
+                                    .click(function () {
+                                        loadGemini({{ language.language_id }}, "{{ language.name }}", "input-meta-description", "   وصف ميتا تاج بسيط  ");
+                                    }));
 
 
-                    $('#input-tag{{ language.language_id }}').parent('div').addClass('input-group').append($('<span/>')
-                        .attr('role', 'button')
-                        .text('!')
-                        .addClass('input-group-addon btn btn-primary btn-sm')
-                        .click(function () {
-                            loadGemini({{ language.language_id }}, "{{ language.name }}", "input-tag", " كلمات مفتاحية مفصولة كل كلمة بفاصلة  ");
-                        }));
+                                $('#input-meta-keyword{{ language.language_id }}').parent('div').addClass('input-group').append($('<span/>')
+                                    .attr('role', 'button')
+                                    .text('!')
+                                    .addClass('input-group-addon btn btn-primary btn-sm')
+                                    .click(function () {
+                                        loadGemini({{ language.language_id }}, "{{ language.name }}", "input-meta-keyword", "  meta keyword  ");
+                                    }));
 
 
-                    console.log("{{ language.name }}", "XXX")
-                    {% endfor %}
-
-                }
-
-            });
-
-
-        })
+                                $('#input-tag{{ language.language_id }}').parent('div').addClass('input-group').append($('<span/>')
+                                    .attr('role', 'button')
+                                    .text('!')
+                                    .addClass('input-group-addon btn btn-primary btn-sm')
+                                    .click(function () {
+                                        loadGemini({{ language.language_id }}, "{{ language.name }}", "input-tag", " كلمات مفتاحية مفصولة كل كلمة بفاصلة  ");
+                                    }));
 
 
-    </script>
+                                console.log("{{ language.name }}", "XXX")
+                                {% endfor %}
+
+                            }
+
+                        });
+
+
+                    })
+
+
+                </script>
 
          </script>
 
