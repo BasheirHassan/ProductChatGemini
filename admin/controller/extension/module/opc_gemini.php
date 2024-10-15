@@ -7,8 +7,7 @@ class ControllerExtensionModuleOpcGemini extends Controller
     public function index()
     {
 
-        $this->document->addStyle('view/javascript/loading/loading.css');
-        $this->document->addScript('view/javascript/loading/jquery.loading.min.js');
+
 
         $data = $this->load->language('extension/module/opc_gemini');
 

@@ -17,10 +17,8 @@
             <add position="after"><![CDATA[
 
         //opc_gemini
-               $this->document->addStyle('view/javascript/loading/loading.css');
-               $this->document->addScript('view/javascript/loading/jquery.loading.min.js');
-
-
+               $this->document->addStyle('view/javascript/opc_gemini/loading/loading.css');
+               $this->document->addScript('view/javascript/opc_gemini/loading/jquery.loading.min.js');
 				]]></add>
         </operation>
 
@@ -41,7 +39,15 @@
               function loadGemini(languageID, languageName, objectName, description) {
                         var product_name = $('#input-name' + languageID);
                         var trimObject = $("#" + objectName + languageID);
-                        $(trimObject).parent('div').loading();
+                        console.log(trimObject)
+
+
+                          if (objectName === "input-description") {
+                                 $(trimObject).parent('div').loading();
+                                } else {
+                                    $(trimObject).loading();
+                         }
+
                         $.ajax({
                             url: 'index.php?route=extension/module/opc_gemini/getData&user_token={{ user_token }}',
                             type: 'post',
@@ -56,7 +62,7 @@
 
 
 
-                                $(trimObject).parent('div').loading('stop');
+                                 $(trimObject).loading('stop');
                                 let jsonVal = json.candidates[0].content.parts[0].text;
 
                                 if (objectName === "input-description") {
@@ -67,7 +73,7 @@
                             },
                             error: function (request, error) {
                                 console.log("Request: " + JSON.stringify(request));
-                                $(trimObject).parent('div').loading('stop');
+                                 $(trimObject).loading('stop');
                             }
                         });
                     }
@@ -84,45 +90,49 @@
                 if (json.result == 1) {
                     {% for language in languages %}
 
-                    $('#input-name{{ language.language_id }}').parent('div').append($('<button/>')
-                        .attr('type', 'button')
-                        .text('i')
-                        .addClass('btn btn-primary btn-sm')
+
+
+                        $('#input-name{{ language.language_id }}').parent('div').addClass('input-group').append($('<span/>')
+                        .attr('role', 'button')
+                        .text('!')
+                        .addClass('input-group-addon btn btn-primary btn-sm')
                         .click(function () {
-                            loadGemini({{ language.language_id }}, "{{ language.name }}", "input-description", "  وصف بسيط  منسق html body  ");
+                          loadGemini({{ language.language_id }}, "{{ language.name }}", "input-description", "  وصف بسيط  منسق html body  ");
                         }));
 
 
-                    $('#input-meta-title{{ language.language_id }}').parent('div').append($('<button/>')
-                        .attr('type', 'button')
-                        .text('i')
-                        .addClass('btn btn-primary btn-sm')
+
+
+                    $('#input-meta-title{{ language.language_id }}').parent('div').addClass('input-group').append($('<span/>')
+                        .attr('role', 'button')
+                        .text('!')
+                        .addClass('input-group-addon btn btn-primary btn-sm')
                         .click(function () {
                             loadGemini({{ language.language_id }}, "{{ language.name }}", "input-meta-title", "كلمات مفتاحية مفصولة كل كلمة - ");
                         }));
 
-                    $('#input-meta-description{{ language.language_id }}').parent('div').append($('<button/>')
-                        .attr('type', 'button')
-                        .text('i')
-                        .addClass('btn btn-primary btn-sm')
+                    $('#input-meta-description{{ language.language_id }}').parent('div').addClass('input-group').append($('<span/>')
+                        .attr('role', 'button')
+                        .text('!')
+                        .addClass('input-group-addon btn btn-primary btn-sm')
                         .click(function () {
                             loadGemini({{ language.language_id }}, "{{ language.name }}", "input-meta-description", "   وصف ميتا تاج بسيط  ");
                         }));
 
 
-                    $('#input-meta-keyword{{ language.language_id }}').parent('div').append($('<button/>')
-                        .attr('type', 'button')
-                        .text('i')
-                        .addClass('btn btn-primary btn-sm')
+                    $('#input-meta-keyword{{ language.language_id }}').parent('div').addClass('input-group').append($('<span/>')
+                        .attr('role', 'button')
+                        .text('!')
+                        .addClass('input-group-addon btn btn-primary btn-sm')
                         .click(function () {
                             loadGemini({{ language.language_id }}, "{{ language.name }}", "input-meta-keyword", "  meta keyword  ");
                         }));
 
 
-                    $('#input-tag{{ language.language_id }}').parent('div').append($('<button/>')
-                        .attr('type', 'button')
-                        .text('i')
-                        .addClass('btn btn-primary btn-sm')
+                    $('#input-tag{{ language.language_id }}').parent('div').addClass('input-group').append($('<span/>')
+                        .attr('role', 'button')
+                        .text('!')
+                        .addClass('input-group-addon btn btn-primary btn-sm')
                         .click(function () {
                             loadGemini({{ language.language_id }}, "{{ language.name }}", "input-tag", " كلمات مفتاحية مفصولة كل كلمة بفاصلة  ");
                         }));
