@@ -57,6 +57,11 @@
 
                                 if (json.hasOwnProperty('error')) {
                                     alert(json.error.message);
+                                       if (objectName === "input-description") {
+                                        $(trimObject).parent('div').loading('stop');
+                                    } else {
+                                        $(trimObject).loading('stop');
+                                    }
                                     return;
                                 }
 
