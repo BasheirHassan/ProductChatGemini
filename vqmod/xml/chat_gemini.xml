@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <modification>
     <name>Custom Modification for admin/controller/catalog/product.php</name>
-    <code>custom_mod_product</code>
+    <code>chat_gemini</code>
     <version>1.0</version>
-    <author>Your Name</author>
-    <link>Your Website or Contact Info</link>
+    <author>Basheir Hassan</author>
+    <link>Chat Gemini</link>
 
 
     <file path="admin/controller/catalog/product.php">
@@ -16,7 +16,7 @@
 
             <add position="after"><![CDATA[
 
-        //opc_gemini
+        //chat_gemini
                $this->document->addStyle('view/javascript/opc_gemini/loading/loading.css');
                $this->document->addScript('view/javascript/opc_gemini/loading/jquery.loading.min.js');
 				]]></add>
@@ -49,7 +49,7 @@
                         }
 
                         $.ajax({
-                            url: 'index.php?route=extension/module/opc_gemini/getData&user_token={{ user_token }}',
+                            url: 'index.php?route=extension/module/chat_gemini/getData&user_token={{ user_token }}',
                             type: 'post',
                             data: {gemini_content: $(product_name).val() + description},
                             dataType: 'json',
@@ -86,7 +86,7 @@
                     $(document).ready(function () {
 
 
-                        $.getJSON("index.php?route=extension/module/opc_gemini/get_status&user_token={{ user_token }}", function (json) {
+                        $.getJSON("index.php?route=extension/module/chat_gemini/get_status&user_token={{ user_token }}", function (json) {
                             console.log("JSON Data: " + json.result);
 
 
