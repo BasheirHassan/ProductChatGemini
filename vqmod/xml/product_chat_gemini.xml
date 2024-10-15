@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <modification>
-    <name>Custom Modification for admin/controller/catalog/product.php</name>
+    <name>Product Chat Gemini</name>
     <code>product_chat_gemini</code>
     <version>1.0</version>
     <author>Basheir Hassan</author>
