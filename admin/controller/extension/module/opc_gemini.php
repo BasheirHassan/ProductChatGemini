@@ -105,9 +105,16 @@ class ControllerExtensionModuleOpcGemini extends Controller
     }
 
 
- public function get_status()
+    /**
+     * اضافة عادا حالة الاضافة الى قاعدة البيانات
+     * This function is used to get the status of the gemini module
+     * @return void
+     */
+    public function get_status()
     {
+        // Get the status of the gemini module from the database
         $result =  $this->config->get('module_opc_gemini_status');
+        // Return the status of the gemini module
         echo json_encode(['result'=>$result]);
     }
 

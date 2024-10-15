@@ -48,6 +48,14 @@
                             data: {gemini_content: $(product_name).val() + description},
                             dataType: 'json',
                             success: function (json) {
+
+                                 if(json.hasOwnProperty('error')){
+                                    alert(json.error);
+                                    return;
+                                 }
+
+
+
                                 $(trimObject).parent('div').loading('stop');
                                 let jsonVal = json.candidates[0].content.parts[0].text;
 
