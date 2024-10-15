@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/gmini.iml" filepath="$PROJECT_DIR$/.idea/gmini.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/ChatGemini.iml" filepath="$PROJECT_DIR$/.idea/ChatGemini.iml" />
     </modules>
   </component>
 </project>

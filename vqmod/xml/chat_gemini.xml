@@ -39,14 +39,10 @@
                     function loadGemini(languageID, languageName, objectName, description) {
                         var product_name = $('#input-name' + languageID);
                         var trimObject = $("#" + objectName + languageID);
-                        console.log(trimObject)
+                        var objectLoading =   (objectName === "input-description") ? $(trimObject).parent('div') : $(trimObject);
 
+                        $(objectLoading).loading();
 
-                        if (objectName === "input-description") {
-                            $(trimObject).parent('div').loading();
-                        } else {
-                            $(trimObject).loading();
-                        }
 
                         $.ajax({
                             url: 'index.php?route=extension/module/chat_gemini/getData&user_token={{ user_token }}',
@@ -57,16 +53,13 @@
 
                                 if (json.hasOwnProperty('error')) {
                                     alert(json.error.message);
-                                       if (objectName === "input-description") {
-                                        $(trimObject).parent('div').loading('stop');
-                                    } else {
-                                        $(trimObject).loading('stop');
-                                    }
+                                     $(objectLoading).loading('stop');
+
                                     return;
                                 }
 
 
-                                $(trimObject).loading('stop');
+                                  $(objectLoading).loading('stop');
                                 let jsonVal = json.candidates[0].content.parts[0].text;
 
                                 if (objectName === "input-description") {
@@ -77,7 +70,7 @@
                             },
                             error: function (request, error) {
                                 console.log("Request: " + JSON.stringify(request));
-                                $(trimObject).loading('stop');
+                                 $(objectLoading).loading('stop');
                             }
                         });
                     }
