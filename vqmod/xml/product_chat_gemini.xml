@@ -80,8 +80,6 @@
 
 
                         $.getJSON("index.php?route=extension/module/product_chat_gemini/get_status&user_token={{ user_token }}", function (json) {
-                            console.log("JSON Data: " + json.result);
-
 
                             if (json.result == 1) {
                                 {% for language in languages %}
@@ -132,7 +130,6 @@
                                     }));
 
 
-                                console.log("{{ language.name }}", "XXX")
                                 {% endfor %}
 
                             }
