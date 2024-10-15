@@ -1,11 +1,11 @@
 <?php
 // Heading
-$_['heading_title']               = ' Chat  Gemini';
+$_['heading_title']               = 'Product Chat  Gemini';
 
 // Text
 $_['text_extension']              = 'Extensions';
-$_['text_success']                = 'تم تعديل بنجاح  Chat  Gemini module!';
-$_['text_edit']                   = 'تعديل  Chat  Gemini Module';
+$_['text_success']                = 'تم تعديل بنجاح  Product Chat  Gemini module!';
+$_['text_edit']                   = 'Product تعديل  Chat  Gemini Module';
 
 // Entry
 $_['entry_status']                = 'حالة';
