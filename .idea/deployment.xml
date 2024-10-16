@@ -8,6 +8,10 @@
           <mappings>
             <mapping deploy="bghouta" local="$PROJECT_DIR$" web="/" />
           </mappings>
+          <excludedPaths>
+            <excludedPath local="true" path="$PROJECT_DIR$/ocmod" />
+            <excludedPath local="true" path="$PROJECT_DIR$/logo" />
+          </excludedPaths>
         </serverdata>
       </paths>
     </serverData>

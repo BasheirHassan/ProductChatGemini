@@ -34,115 +34,118 @@
             <add position="after"><![CDATA[
 
 
-
-         <script type="text/javascript">
-                    function loadGemini(languageID, languageName, objectName, description) {
-                        var product_name = $('#input-name' + languageID);
-                        var trimObject = $("#" + objectName + languageID);
-                        var objectLoading =   (objectName === "input-description") ? $(trimObject).parent('div') : $(trimObject);
-
-                        $(objectLoading).loading();
+    <script type="text/javascript">
+        function loadGemini(languageID, languageName, objectName, description) {
+            var product_name = $('#input-name' + languageID);
+            var trimObject = $("#" + objectName + languageID);
 
 
-                        $.ajax({
-                            url: 'index.php?route=extension/module/product_chat_gemini/getData&user_token={{ user_token }}',
-                            type: 'post',
-                            data: {gemini_content: $(product_name).val() + description},
-                            dataType: 'json',
-                            success: function (json) {
+            var strReplece = description.replace(/[\{{\}}]/g, product_name);
 
-                                if (json.hasOwnProperty('error')) {
-                                    alert(json.error.message);
-                                     $(objectLoading).loading('stop');
+            var objectLoading = (objectName === "input-description") ? $(trimObject).parent('div') : $(trimObject);
 
-                                    return;
-                                }
+            $(objectLoading).loading();
 
 
-                                  $(objectLoading).loading('stop');
-                                let jsonVal = json.candidates[0].content.parts[0].text;
+            $.ajax({
+                url: 'index.php?route=extension/module/product_chat_gemini/getData&user_token={{ user_token }}',
+                type: 'post',
+                data: {gemini_content: strReplece},
+                dataType: 'json',
+                success: function (json) {
 
-                                if (objectName === "input-description") {
-                                    $(trimObject).summernote('code', jsonVal);
-                                } else {
-                                    $(trimObject).val(jsonVal);
-                                }
-                            },
-                            error: function (request, error) {
-                                console.log("Request: " + JSON.stringify(request));
-                                 $(objectLoading).loading('stop');
-                            }
-                        });
+                    if (json.hasOwnProperty('error')) {
+                        alert(json.error.message);
+                        $(objectLoading).loading('stop');
+
+                        return;
                     }
 
 
-                    $(document).ready(function () {
+                    $(objectLoading).loading('stop');
+                    let jsonVal = json.candidates[0].content.parts[0].text;
+
+                    if (objectName === "input-description") {
+                        $(trimObject).summernote('code', jsonVal);
+                    } else {
+                        $(trimObject).val(jsonVal);
+                    }
+                },
+                error: function (request, error) {
+                    console.log("Request: " + JSON.stringify(request));
+                    $(objectLoading).loading('stop');
+                }
+            });
+        }
 
 
-                        $.getJSON("index.php?route=extension/module/product_chat_gemini/get_status&user_token={{ user_token }}", function (json) {
-
-                            if (json.result == 1) {
-                                {% for language in languages %}
+        $(document).ready(function () {
 
 
+            $.getJSON("index.php?route=extension/module/product_chat_gemini/get_status&user_token={{ user_token }}", function (json) {
 
-                                $('#input-name{{ language.language_id }}').parent('div').addClass('input-group').append($('<span/>')
-                                    .attr('role', 'button')
-                                    .text('!')
-                                    .addClass('input-group-addon btn btn-primary btn-sm')
-                                    .click(function () {
-                                        loadGemini({{ language.language_id }}, "{{ language.name }}", "input-description", "  وصف بسيط  منسق html body  ");
-                                    }));
+                if (json.result.status == 1) {
+                    {% for language in languages %}
 
 
-                                $('#input-meta-title{{ language.language_id }}').parent('div').addClass('input-group').append($('<span/>')
-                                    .attr('role', 'button')
-                                    .text('!')
-                                    .addClass('input-group-addon btn btn-primary btn-sm')
-                                    .click(function () {
-                                        loadGemini({{ language.language_id }}, "{{ language.name }}", "input-meta-title", "كلمات مفتاحية مفصولة كل كلمة - ");
-                                    }));
+                    console.log(json.result.input_meta_keyword{{ language.language_id }});
 
-                                $('#input-meta-description{{ language.language_id }}').parent('div').addClass('input-group').append($('<span/>')
-                                    .attr('role', 'button')
-                                    .text('!')
-                                    .addClass('input-group-addon btn btn-primary btn-sm')
-                                    .click(function () {
-                                        loadGemini({{ language.language_id }}, "{{ language.name }}", "input-meta-description", "   وصف ميتا تاج بسيط  ");
-                                    }));
+                    $('#input-name{{ language.language_id }}').parent('div').addClass('input-group').append($('<span/>')
+                        .attr('role', 'button')
+                        .text('!')
+                        .addClass('input-group-addon btn btn-primary btn-sm')
+                        .click(function () {
+                            loadGemini({{ language.language_id }}, "{{ language.name }}", "input-description", json.result.input_meta_description{{ language.language_id }});
+                        }));
 
 
-                                $('#input-meta-keyword{{ language.language_id }}').parent('div').addClass('input-group').append($('<span/>')
-                                    .attr('role', 'button')
-                                    .text('!')
-                                    .addClass('input-group-addon btn btn-primary btn-sm')
-                                    .click(function () {
-                                        loadGemini({{ language.language_id }}, "{{ language.name }}", "input-meta-keyword", "  meta keyword  ");
-                                    }));
+                    $('#input-meta-title{{ language.language_id }}').parent('div').addClass('input-group').append($('<span/>')
+                        .attr('role', 'button')
+                        .text('!')
+                        .addClass('input-group-addon btn btn-primary btn-sm')
+                        .click(function () {
+                            loadGemini({{ language.language_id }}, "{{ language.name }}", "input-meta-title", json.result.input_meta_title{{ language.language_id }});
+                        }));
+
+                    $('#input-meta-description{{ language.language_id }}').parent('div').addClass('input-group').append($('<span/>')
+                        .attr('role', 'button')
+                        .text('!')
+                        .addClass('input-group-addon btn btn-primary btn-sm')
+                        .click(function () {
+                            loadGemini({{ language.language_id }}, "{{ language.name }}", "input-meta-description", json.result.input_meta_description{{ language.language_id }});
+                        }));
 
 
-                                $('#input-tag{{ language.language_id }}').parent('div').addClass('input-group').append($('<span/>')
-                                    .attr('role', 'button')
-                                    .text('!')
-                                    .addClass('input-group-addon btn btn-primary btn-sm')
-                                    .click(function () {
-                                        loadGemini({{ language.language_id }}, "{{ language.name }}", "input-tag", " كلمات مفتاحية مفصولة كل كلمة بفاصلة  ");
-                                    }));
+                    $('#input-meta-keyword{{ language.language_id }}').parent('div').addClass('input-group').append($('<span/>')
+                        .attr('role', 'button')
+                        .text('!')
+                        .addClass('input-group-addon btn btn-primary btn-sm')
+                        .click(function () {
+                            loadGemini({{ language.language_id }}, "{{ language.name }}", "input-meta-keyword", json.result.input_meta_keyword{{ language.language_id }});
+                        }));
 
 
-                                {% endfor %}
+                    $('#input-tag{{ language.language_id }}').parent('div').addClass('input-group').append($('<span/>')
+                        .attr('role', 'button')
+                        .text('!')
+                        .addClass('input-group-addon btn btn-primary btn-sm')
+                        .click(function () {
+                            loadGemini({{ language.language_id }}, "{{ language.name }}", "input-tag", json.result.input_tag{{ language.language_id }});
+                        }));
 
-                            }
 
-                        });
+                    {% endfor %}
+
+                }
+
+            });
 
 
-                    })
+        })
 
 
-                </script>
+    </script>
 
-         </script>
 
 
             ]]></add>

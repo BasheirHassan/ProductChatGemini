@@ -10,9 +10,8 @@ class ControllerExtensionModuleProductChatGemini extends Controller
 
 
         $data = $this->load->language('extension/module/product_chat_gemini');
-
         if ($this->request->post) {
-            $this->request->post = array_map('trim', $this->request->post);
+//            $this->request->post = array_map('trim', $this->request->post);
         }
 
         $this->document->setTitle($this->language->get('heading_title'));
@@ -65,10 +64,26 @@ class ControllerExtensionModuleProductChatGemini extends Controller
 
         $data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module', true);
 
+        $this->load->model('localisation/language');
+        $languages =  $data['languages'] = $this->model_localisation_language->getLanguages();
+
+
         $chat_module_config = array(
             'status',
-            'api_key'
+            'api_key',
         );
+
+        foreach ($languages as $key => $value) {
+            array_push($chat_module_config,
+                'input_name'.$value['language_id'],
+                'input_meta_keyword'.$value['language_id'],
+                'input_meta_description'.$value['language_id'],
+                'input_meta_title'.$value['language_id'],
+                'input_tag'.$value['language_id']
+            );
+        }
+
+
 
         foreach ($chat_module_config as $key => $value) {
             if (isset($this->request->post['module_product_chat_gemini_' . $value])) {
@@ -81,8 +96,12 @@ class ControllerExtensionModuleProductChatGemini extends Controller
         $data['header'] = $this->load->controller('common/header');
         $data['column_left'] = $this->load->controller('common/column_left');
         $data['footer'] = $this->load->controller('common/footer');
+        $data['product_lang'] = $this->load->language('catalog/product');
 
 
+
+
+//     print_r($data);
         $this->response->setOutput($this->load->view('extension/module/product_chat_gemini', $data));
     }
 
@@ -114,7 +133,31 @@ class ControllerExtensionModuleProductChatGemini extends Controller
         // Get the status of the gemini module from the database
         $result =  $this->config->get('module_product_chat_gemini_status');
         // Return the status of the gemini module
-        echo json_encode(['result'=>$result]);
+
+        $this->load->model('localisation/language');
+        $languages =  $data['languages'] = $this->model_localisation_language->getLanguages();
+
+
+        $chat_module_config = array(
+            'status',
+            'api_key',
+        );
+
+        foreach ($languages as $key => $value) {
+            array_push($chat_module_config,
+                'input_name'.$value['language_id'],
+                'input_meta_keyword'.$value['language_id'],
+                'input_meta_description'.$value['language_id'],
+                'input_meta_title'.$value['language_id'],
+                'input_tag'.$value['language_id']
+            );
+        }
+
+        foreach ($chat_module_config as $key => $value) {
+            $data[$value] = $this->config->get('module_product_chat_gemini_' . $value);
+        }
+
+        echo json_encode(['result'=>$data]);
     }
 
     protected function validate()
