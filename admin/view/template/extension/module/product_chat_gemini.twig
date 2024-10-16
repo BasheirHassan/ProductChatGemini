@@ -59,46 +59,45 @@
 
             {{ language.name }}
 
-            {% set name = 'module_product_chat_gemini_input_name' ~ language.language_id %}
+            {% set description = 'module_product_chat_gemini_input_description' ~ language.language_id %}
             {% set meta_title = 'module_product_chat_gemini_input_meta_title' ~ language.language_id %}
             {% set meta_description = 'module_product_chat_gemini_input_meta_description' ~ language.language_id %}
-            {% set meta_keyword = 'module_product_chat_gemini_input_meta_keyword' ~ language.language_id %}
             {% set meta_keyword = 'module_product_chat_gemini_input_meta_keyword' ~ language.language_id %}
             {% set tag = 'module_product_chat_gemini_input_tag' ~ language.language_id %}
 
 
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="module_product_chat_gemini_input_name{{ language.language_id }}">{{ entry_name }}/ {{ language.name }}</label>
+              <label class="col-sm-2 control-label" for="module_product_chat_gemini_input_description{{ language.language_id }}">{{ entry_description }}/ {{ language.name }}</label>
               <div class="col-sm-10">
-                <input type="text" name="module_product_chat_gemini_input_name{{ language.language_id }}"  id="input-name{{ language.language_id }}" class="form-control" value="{{ attribute(_context, name)|default(' وصف المنتج{{ name}} بشكل مبسط وسهل تنسيق html ') }}">
+                <input type="text" name="module_product_chat_gemini_input_description{{ language.language_id }}"  id="input-name{{ language.language_id }}" class="form-control" value="{{ attribute(_context, description)|default(' وصف المنتج {name} بشكل مبسط وسهل تنسيق html ') }}">
               </div>
             </div>
 
             <div class="form-group">
               <label class="col-sm-2 control-label" for="module_product_chat_gemini_input_meta_title{{ language.language_id }}">{{ entry_meta_title }}/ {{ language.name }}</label>
               <div class="col-sm-10">
-                <input type="text" name="module_product_chat_gemini_input_meta_title{{ language.language_id }}"  id="input-meta-title{{ language.language_id }}" class="form-control" value="{{ attribute(_context, meta_title)|default('{{ name}} كلمات مفتاحية مفصولة كل كلمة -') }}">
+                <input type="text" name="module_product_chat_gemini_input_meta_title{{ language.language_id }}"  id="input-meta-title{{ language.language_id }}" class="form-control" value="{{ attribute(_context, meta_title)|default('{name} كلمات مفتاحية مفصولة كل كلمة -') }}">
               </div>
             </div>
 
             <div class="form-group">
               <label class="col-sm-2 control-label" for="module_product_chat_gemini_input_meta_description{{ language.language_id }}">{{ entry_meta_description }}/ {{ language.name }}</label>
               <div class="col-sm-10">
-                <input type="text" name="module_product_chat_gemini_input_meta_description{{ language.language_id }}"  id="input-meta-description{{ language.language_id }}" class="form-control" value="{{ attribute(_context, meta_description)|default(' {{ name}} وصف ميتا تاج بسيط  ') }}">
+                <input type="text" name="module_product_chat_gemini_input_meta_description{{ language.language_id }}"  id="input-meta-description{{ language.language_id }}" class="form-control" value="{{ attribute(_context, meta_description)|default(' {name} وصف ميتا تاج بسيط  ') }}">
               </div>
             </div>
 
             <div class="form-group">
               <label class="col-sm-2 control-label" for="module_product_chat_gemini_input_meta_keyword{{ language.language_id }}">{{ entry_meta_keyword }}/ {{ language.name }}</label>
               <div class="col-sm-10">
-                <input type="text" name="module_product_chat_gemini_input_meta_keyword{{ language.language_id }}"  id="input-meta-keyword{{ language.language_id }}" class="form-control" value="{{ attribute(_context, meta_keyword)|default('  meta keyword {{ name}} ') }}">
+                <input type="text" name="module_product_chat_gemini_input_meta_keyword{{ language.language_id }}"  id="input-meta-keyword{{ language.language_id }}" class="form-control" value="{{ attribute(_context, meta_keyword)|default('  meta keyword {name} ') }}">
               </div>
             </div>
 
             <div class="form-group">
               <label class="col-sm-2 control-label" for="module_product_chat_gemini_input-tag{{ language.language_id }}">{{ entry_tag }} / {{ language.name }}</label>
               <div class="col-sm-10">
-                <input type="text" name="module_product_chat_gemini_input_tag{{ language.language_id }}"  id="input-input-tag{{ language.language_id }}" class="form-control" value="{{ attribute(_context, tag)|default('{{ name}} كلمات مفتاحية مفصولة كل كلمة بفاصلة') }}">
+                <input type="text" name="module_product_chat_gemini_input_tag{{ language.language_id }}"  id="input-input-tag{{ language.language_id }}" class="form-control" value="{{ attribute(_context, tag)|default('{name} كلمات مفتاحية مفصولة كل كلمة بفاصلة') }}">
               </div>
             </div>
 

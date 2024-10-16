@@ -40,7 +40,12 @@
             var trimObject = $("#" + objectName + languageID);
 
 
-            var strReplece = description.replace(/[\{{\}}]/g, product_name);
+                if(description == null){
+                alert (" قم بتفعيل الاضافة ");
+                }
+                var strReplece = description.replace(/\{.*?\}/, $(product_name).val());
+                console.log(strReplece)
+
 
             var objectLoading = (objectName === "input-description") ? $(trimObject).parent('div') : $(trimObject);
 
@@ -87,15 +92,12 @@
                 if (json.result.status == 1) {
                     {% for language in languages %}
 
-
-                    console.log(json.result.input_meta_keyword{{ language.language_id }});
-
                     $('#input-name{{ language.language_id }}').parent('div').addClass('input-group').append($('<span/>')
                         .attr('role', 'button')
                         .text('!')
                         .addClass('input-group-addon btn btn-primary btn-sm')
                         .click(function () {
-                            loadGemini({{ language.language_id }}, "{{ language.name }}", "input-description", json.result.input_meta_description{{ language.language_id }});
+                            loadGemini({{ language.language_id }}, "{{ language.name }}", "input-description", json.result.input_description{{ language.language_id }});
                         }));
 
 

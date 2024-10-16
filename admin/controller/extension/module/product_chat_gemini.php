@@ -75,7 +75,7 @@ class ControllerExtensionModuleProductChatGemini extends Controller
 
         foreach ($languages as $key => $value) {
             array_push($chat_module_config,
-                'input_name'.$value['language_id'],
+                'input_description'.$value['language_id'],
                 'input_meta_keyword'.$value['language_id'],
                 'input_meta_description'.$value['language_id'],
                 'input_meta_title'.$value['language_id'],
@@ -145,7 +145,7 @@ class ControllerExtensionModuleProductChatGemini extends Controller
 
         foreach ($languages as $key => $value) {
             array_push($chat_module_config,
-                'input_name'.$value['language_id'],
+                'input_description'.$value['language_id'],
                 'input_meta_keyword'.$value['language_id'],
                 'input_meta_description'.$value['language_id'],
                 'input_meta_title'.$value['language_id'],
