@@ -23,3 +23,14 @@ $_['help_var']		= '{name} لاتقم بازالة المتغير لانه يتم
 
 // Error
 $_['error_permission']	= 'Warning: You do not have permission to modify this module!';
+
+
+
+// setting Model
+
+$_['inpt_description']			= ' وصف المنتج {name} بشكل مبسط وسهل تنسيق سطري ';
+$_['inpt_meta_keywords']		= '{name} كلمات مفتاحية مفصولة كل كلمة -';
+$_['inpt_meta_description']		= '{name} وصف ميتا تاج بسيط  ';
+$_['inpt_meta_keyword']			= 'الكلمة الرئيسية التعريفية {name}';
+$_['inpt_tag']			        = '{name} كلمات مفتاحية مفصولة كل كلمة بفاصلة';
+

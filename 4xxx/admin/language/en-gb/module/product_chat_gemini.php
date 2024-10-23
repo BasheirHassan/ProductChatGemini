@@ -24,3 +24,14 @@ $_['help_var']		= 'Do not remove {name} variable, replace it with the product na
 
 // Error
 $_['error_permission']	= 'Warning: You do not have permission to modify this module!';
+
+
+
+
+// setting Model
+
+$_['inpt_description']			= 'Description of the product {name} in a simple, popular, inline form';
+$_['inpt_meta_keywords']		= 'Keywords {name} separated by each word -';
+$_['inpt_meta_description']		= 'Meta Description {name} Simple Tag';
+$_['inpt_meta_keyword']			= 'Meta keyword {name} ';
+$_['inpt_tag']			        = '{name} Keywords separated by a comma';

@@ -2,6 +2,8 @@
 <div id="content">
 
 
+
+
 	<div class="page-header">
 		<div class="container-fluid">
 			<div class="float-end">
@@ -75,7 +77,7 @@
 											<input type="text"
 												   name="module_product_chat_gemini_input_description[{{ language.language_id }}]"
 												   id="input-name{{ language.language_id }}" class="form-control"
-												   value="{{ description|default(' وصف المنتج {name} بشكل مبسط وسهل تنسيق سطري ') }}">
+												   value="{{ description|default(inpt_description) }}">
 										</div>
 									</div>
 
@@ -86,7 +88,7 @@
 											<input type="text"
 												   name="module_product_chat_gemini_input_meta_title[{{ language.language_id }}]"
 												   id="input-meta-title{{ language.language_id }}" class="form-control"
-												   value="{{ meta_title |default('{name} كلمات مفتاحية مفصولة كل كلمة -') }}">
+												   value="{{ meta_title |default(inpt_meta_keywords) }}">
 										</div>
 									</div>
 
@@ -97,7 +99,7 @@
 											<input type="text"
 												   name="module_product_chat_gemini_input_meta_description[{{ language.language_id }}]"
 												   id="input-meta-description{{ language.language_id }}" class="form-control"
-												   value="{{  (meta_description)|default(' {name} وصف ميتا تاج بسيط  ') }}">
+												   value="{{  (meta_description)|default(inpt_meta_description) }}">
 										</div>
 									</div>
 
@@ -108,7 +110,7 @@
 											<input type="text"
 												   name="module_product_chat_gemini_input_meta_keyword[{{ language.language_id }}]"
 												   id="input-meta-keyword{{ language.language_id }}" class="form-control"
-												   value="{{ (meta_keyword)|default('  meta keyword {name} ') }}">
+												   value="{{ (meta_keyword)|default(inpt_meta_keyword) }}">
 										</div>
 									</div>
 
@@ -119,7 +121,7 @@
 											<input type="text"
 												   name="module_product_chat_gemini_input_tag[{{ language.language_id }}]"
 												   id="input-input-tag{{ language.language_id }}" class="form-control"
-												   value="{{ (tag)|default('{name} كلمات مفتاحية مفصولة كل كلمة بفاصلة') }}">
+												   value="{{ (tag)|default(inpt_tag) }}">
 										</div>
 									</div>
 
