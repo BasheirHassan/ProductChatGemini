@@ -1,0 +1,139 @@
+{{ header }}{{ column_left }}
+<div id="content">
+
+
+	<div class="page-header">
+		<div class="container-fluid">
+			<div class="float-end">
+				<a href="{{ btn_dev }}" target="_blank" class="btn btn-primary" role="button"><i class="fa fa-cog"></i></a>
+				<button type="submit" form="form-captcha" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa-solid fa-save"></i></button>
+				<a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fa-solid fa-reply"></i></a></div>
+			<h1>{{ heading_title }}</h1>
+			<ol class="breadcrumb">
+				{% for breadcrumb in breadcrumbs %}
+					<li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+				{% endfor %}
+			</ol>
+		</div>
+	</div>
+	<div class="container-fluid">
+		<div class="card">
+			<div class="card-header">
+				<span class="fa-solid fa-pencil"></span>
+				<span>{{ text_edit }} {{ help_status }}</span>
+
+			</div>
+			<div class="card-body">
+				<form id="form-captcha" action="{{ save }}" method="post" data-oc-toggle="ajax">
+					<div class="row mb-3">
+						<label class="col-sm-2 col-form-label">{{ entry_status }}</label>
+						<div class="col-sm-10">
+							<div class="form-check form-switch form-switch-lg">
+								<input type="hidden" name="module_product_chat_gemini_status" value="0"/>
+								<input type="checkbox" name="module_product_chat_gemini_status" value="1" id="input-status" class="form-check-input"{% if module_product_chat_gemini_status %} checked{% endif %}/>
+							</div>
+						</div>
+					</div>
+
+					<div class="mb-3 row">
+						<label class="col-sm-2 col-form-label" for="input-api_key">{{ entry_api_key }}API</label>
+						<div class="col-sm-10">
+							<input type="password" name="module_product_chat_gemini_api_key" placeholder="{{ entry_api_key }}"
+								   id="input-api_key" class="form-control" value="{{ module_product_chat_gemini_api_key }}">
+							{% if error_api_key %}
+								<div class="text-danger">{{ error_api_key }}</div>
+							{% endif %}
+						</div>
+					</div>
+					<div class="accordion" id="accordionExample">
+						{% for language in languages %}
+
+
+							{% set description = module_product_chat_gemini_input_description[language.language_id] %}
+							{% set meta_title = module_product_chat_gemini_input_meta_title[language.language_id] %}
+							{% set meta_description = module_product_chat_gemini_input_meta_description[language.language_id] %}
+							{% set meta_keyword = module_product_chat_gemini_input_meta_keyword [language.language_id] %}
+							{% set tag = module_product_chat_gemini_input_tag [language.language_id] %}
+
+
+							<div class="accordion-item">
+								<h2 class="accordion-header" id="heading{{ language.language_id }}">
+									<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ language.language_id }}" aria-expanded="true" aria-controls="collapse{{ language.language_id }}">
+										{{ language.name }}
+										<span> -  <i class=" text-danger text-center ">{{ help_var }}</i></span>
+
+									</button>
+
+								</h2>
+								<div id="collapse{{ language.language_id }}" class="accordion-collapse collapse show" aria-labelledby="heading{{ language.language_id }}" data-bs-parent="#accordionExample">
+
+
+									<div class="mb-3 row ">
+										<label class="col-sm-2 col-form-label "
+											   for="module_product_chat_gemini_input_description{{ language.language_id }}">{{ entry_description }} / {{ language.name }}</label>
+										<div class="col-sm-10">
+											<input type="text"
+												   name="module_product_chat_gemini_input_description[{{ language.language_id }}]"
+												   id="input-name{{ language.language_id }}" class="form-control"
+												   value="{{ description|default(' وصف المنتج {name} بشكل مبسط وسهل تنسيق سطري ') }}">
+										</div>
+									</div>
+
+									<div class="mb-3 row">
+										<label class="col-sm-2 col-form-label"
+											   for="module_product_chat_gemini_input_meta_title{{ language.language_id }}">{{ entry_meta_title }} / {{ language.name }}</label>
+										<div class="col-sm-10">
+											<input type="text"
+												   name="module_product_chat_gemini_input_meta_title[{{ language.language_id }}]"
+												   id="input-meta-title{{ language.language_id }}" class="form-control"
+												   value="{{ meta_title |default('{name} كلمات مفتاحية مفصولة كل كلمة -') }}">
+										</div>
+									</div>
+
+									<div class="mb-3 row">
+										<label class="col-sm-2 col-form-label"
+											   for="module_product_chat_gemini_input_meta_description[{{ language.language_id }}]">{{ entry_meta_description }} / {{ language.name }}</label>
+										<div class="col-sm-10">
+											<input type="text"
+												   name="module_product_chat_gemini_input_meta_description[{{ language.language_id }}]"
+												   id="input-meta-description{{ language.language_id }}" class="form-control"
+												   value="{{  (meta_description)|default(' {name} وصف ميتا تاج بسيط  ') }}">
+										</div>
+									</div>
+
+									<div class="mb-3 row">
+										<label class="col-sm-2 col-form-label"
+											   for="module_product_chat_gemini_input_meta_keyword{{ language.language_id }}">{{ entry_meta_keyword }} / {{ language.name }}</label>
+										<div class="col-sm-10">
+											<input type="text"
+												   name="module_product_chat_gemini_input_meta_keyword[{{ language.language_id }}]"
+												   id="input-meta-keyword{{ language.language_id }}" class="form-control"
+												   value="{{ (meta_keyword)|default('  meta keyword {name} ') }}">
+										</div>
+									</div>
+
+									<div class="mb-3 row">
+										<label class="col-sm-2 col-form-label"
+											   for="module_product_chat_gemini_input-tag[{{ language.language_id }}]">{{ entry_tag }} / {{ language.name }}</label>
+										<div class="col-sm-10">
+											<input type="text"
+												   name="module_product_chat_gemini_input_tag[{{ language.language_id }}]"
+												   id="input-input-tag{{ language.language_id }}" class="form-control"
+												   value="{{ (tag)|default('{name} كلمات مفتاحية مفصولة كل كلمة بفاصلة') }}">
+										</div>
+									</div>
+
+								</div>
+							</div>
+
+
+						{% endfor %}
+					</div>
+
+
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+{{ footer }}
