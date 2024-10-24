@@ -1,15 +1,12 @@
 {
-    "name": "product_chat_gemini",
-    "version": "ocmod",
-    "description": "Crystal Custem Tools",
-    "productName": "Crystal Custem Tools",
+    "name": "product_chat_gemini.ocmod",
+    "version": "",
     "author": "Basheir Hassan",
-    "main": "dist-electron/main/index.js",
     "license": "MIT",
     "private": true,
     "scripts": {
         "dev": "vite",
-        "zip": "npm-build-zip --source=4xxx --output=/4xxx --overwrite --name_only=true",
+        "zip": "npm-build-zip --source=4xxx --name=product_chat_gemini.ocmod --name_only=true ",
         "preview": "vite preview"
     },
     "devDependencies": {

@@ -55,6 +55,13 @@ class ProductChatGemini extends \Opencart\System\Engine\Controller
             $html ='<button type="button" onclick="getGeminiAll()" data-bs-toggle="tooltip" title="'.$language_modeul['btn_run_all'].'" class="btn btn-primary m-1"><i class="fa-solid fa-bookmark"></i></button>';
             $output = str_replace($find, $html . $find, $output);
 
+            $find ='<button type="submit" form="form-category" data-bs-toggle="tooltip" title="'.$args['button_save'].'" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i></button>';
+            $html ='<button type="button" onclick="getGeminiAll()" data-bs-toggle="tooltip" title="'.$language_modeul['btn_run_all'].'" class="btn btn-primary m-1"><i class="fa-solid fa-bookmark"></i></button>';
+            $output = str_replace($find, $html . $find, $output);
+
+
+
+
 
         }
     }
