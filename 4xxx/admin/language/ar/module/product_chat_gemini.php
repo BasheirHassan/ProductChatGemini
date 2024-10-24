@@ -17,6 +17,12 @@ $_['btn_run_all']			= 'جلب كل البيانات من Gemini';
 // Entry
 $_['entry_status']		= 'Status';
 
+
+$_['entry_api_key']		= 'Gemini API key';
+
+
+
+
 // Help
 $_['help_status']		= 'Module Product Chat Gemini';
 

@@ -17,6 +17,9 @@ $_['btn_run_all']			= 'Run All Gemini';
 // Entry
 $_['entry_status']		= 'Status';
 
+$_['entry_api_key']		= 'Gemini API key';
+
+
 // Help
 $_['help_status']		= ' Module Product Chat Gemini';
 

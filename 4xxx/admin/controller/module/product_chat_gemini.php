@@ -11,10 +11,10 @@ class ProductChatGemini extends \Opencart\System\Engine\Controller {
     private $description = 'Add  / Product Chat Gemini';
 
 	public function index(): void {
-		$this->load->language($this->path);
+		$languageModel = $this->load->language($this->path);
 		$this->load->model('setting/extension');
         $this->load->language('catalog/product');
-		$this->document->setTitle(strip_tags($this->language->get('heading_title')));
+		$this->document->setTitle(strip_tags($languageModel['heading_title']));
 
 
 
