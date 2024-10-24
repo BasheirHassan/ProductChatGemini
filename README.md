@@ -3,8 +3,8 @@
 اضافة تقوم بجلب وصف المنتج عن طريق الذكاؤ الصناعي
 Google Gemini API
 
-<img src="3xxx/logo/logo.jpg">
 
+![image](https://github.com/user-attachments/assets/2f1a8dfe-afc2-415f-8790-aea3c03c5ee8)
 
 
 
