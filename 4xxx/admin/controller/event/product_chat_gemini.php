@@ -11,6 +11,8 @@ class ProductChatGemini extends \Opencart\System\Engine\Controller
     public function init(&$route, &$args, &$output): void
     {
 
+        echo $route;
+
         $this->load->model('localisation/language');
         $languages = $this->model_localisation_language->getLanguages();
         $json_languages = json_encode($languages);
@@ -45,6 +47,7 @@ class ProductChatGemini extends \Opencart\System\Engine\Controller
 
 
             $find = $args['footer'];
+
             $output = str_replace($find, $html . $find, $output);
 
 
@@ -58,6 +61,7 @@ class ProductChatGemini extends \Opencart\System\Engine\Controller
         // Get the API key, and retrieve the user's prompt
         $key = $this->config->get('module_product_chat_gemini_api_key');
         $status = false;
+        $text = "";
         $message ="تم جلب البيانات بنجاح";
 
         if ($this->config->get('module_product_chat_gemini_api_key') && isset($this->request->post['gemini_content'])) {
@@ -88,17 +92,18 @@ class ProductChatGemini extends \Opencart\System\Engine\Controller
             curl_close($ch);
 
 
+
             if(curl_errno($ch)) {
                 $err = 'Request Error: ' . curl_error($ch);
                 $status =false;
-                $message ="لم يتم جلب البيانات بنجاح" . $err;
+                $message ="لم يتم جلب البيانات بنجاح" . $err .$response;
             } else {
                 $status=true;
                 // Parse the JSON response
                 $data = json_decode($response, true);
                 $text = $data['candidates'][0]['content']['parts'][0]['text'] ?? ( $status= false);
                 if (!$status){
-                    $message ="لم يتم جلب البيانات بنجاح";
+                    $message ="لم يتم جلب البيانات بنجاح " .PHP_EOL. $data['error']['message'];
                 }
 
             }

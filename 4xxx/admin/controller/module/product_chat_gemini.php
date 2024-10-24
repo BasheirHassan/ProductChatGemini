@@ -103,14 +103,7 @@ class ProductChatGemini extends \Opencart\System\Engine\Controller {
         $x = (VERSION >= '4.0.2') ? '.' : '|';
         $this->load->model('setting/event');
         $this->model_setting_event->deleteEventByCode($this->module);
-        $this->model_setting_event->addEvent([
-            'code'			=> $this->module,
-            'description'	=> $this->description,
-            'trigger'       => 'admin/view/catalog/product_form/before',
-            'action'		=> $this->event.$x.'init',
-            'status'		=> true,
-            'sort_order'	=> 0
-        ]);
+
 
         $this->model_setting_event->addEvent([
             'code'			=> $this->module,
@@ -120,6 +113,19 @@ class ProductChatGemini extends \Opencart\System\Engine\Controller {
             'status'		=> true,
             'sort_order'	=> 0
         ]);
+
+
+
+
+        $this->model_setting_event->addEvent([
+            'code'			=> $this->module,
+            'description'	=> $this->description,
+            'trigger'       => 'admin/view/catalog/category_form/after',
+            'action'		=> $this->event.$x.'init',
+            'status'		=> true,
+            'sort_order'	=> 0
+        ]);
+
 
 
 

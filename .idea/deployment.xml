@@ -6,7 +6,7 @@
       <paths name="bghouta">
         <serverdata>
           <mappings>
-            <mapping deploy="bghouta" local="$PROJECT_DIR$" web="/" />
+            <mapping deploy="product_chat_gemini" local="$PROJECT_DIR$/4xxx" web="/" />
           </mappings>
           <excludedPaths>
             <excludedPath local="true" path="$PROJECT_DIR$/ocmod" />
