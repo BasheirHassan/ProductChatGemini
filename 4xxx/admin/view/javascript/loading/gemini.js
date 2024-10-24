@@ -52,7 +52,6 @@ function loadGeminiStatus(languages, modelConfig, route) {
     $(document).ready(function () {
         for (const language in languageConfigs) {
 
-            console.log(languageConfigs[language]);
             const languageID = languageConfigs[language].language_id;
             const languageName = languageConfigs[language].name;
 
@@ -63,7 +62,7 @@ function loadGeminiStatus(languages, modelConfig, route) {
             const metaKeyword = modelConfigs.input_meta_keyword[languageID];
             const tag = modelConfigs.input_tag[languageID];
 
-            const btnStyle = "d-flex flex-row justify-content-center align-items-center input-group-addon btn btn-primary btn-sm fa fa-info-circle text-center";
+            const btnStyle = "d-flex flex-row justify-content-center align-items-center input-group-addon btn btn-primary btn-sm fa fa-info-circle text-center chat-gemini-btn";
 
             createHintButton(`#input-name-${languageID}`, btnStyle, () => loadGemini(languageID, languageName, "input-description", description, route));
             createInputEventHandlers(languageID, description, metaTitle, metaDescription, metaKeyword, tag);
@@ -102,4 +101,9 @@ function createInputEventHandlers(languageID, description, metaTitle, metaDescri
 function updateHint(selector, productName, description) {
     const updatedDescription = description.replace(/\{.*?\}/, productName);
     $(selector).next('span').attr('title', updatedDescription);
+}
+
+
+function getGeminiAll() {
+    $(".chat-gemini-btn").click();
 }

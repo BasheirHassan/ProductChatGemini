@@ -11,7 +11,6 @@ class ProductChatGemini extends \Opencart\System\Engine\Controller
     public function init(&$route, &$args, &$output): void
     {
 
-        echo $route;
 
         $this->load->model('localisation/language');
         $languages = $this->model_localisation_language->getLanguages();
@@ -20,7 +19,7 @@ class ProductChatGemini extends \Opencart\System\Engine\Controller
 
         if ($this->config->get($this->module . '_status')) {
 
-            $this->load->language($this->path);
+            $language_modeul = $this->load->language($this->path);
             $this->load->language('catalog/product');
             $url_route = $this->url->link('extension/product_chat_gemini/event/product_chat_gemini|get_data_from_gemini', 'user_token=' . $this->session->data['user_token'], false);
 
@@ -47,7 +46,13 @@ class ProductChatGemini extends \Opencart\System\Engine\Controller
 
 
             $find = $args['footer'];
+            $output = str_replace($find, $html . $find, $output);
 
+
+
+
+            $find ='<button type="submit" form="form-product" data-bs-toggle="tooltip" title="'.$args['button_save'].'" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i></button>';
+            $html ='<button type="button" onclick="getGeminiAll()" data-bs-toggle="tooltip" title="'.$language_modeul['btn_run_all'].'" class="btn btn-primary m-1"><i class="fa-solid fa-bookmark"></i></button>';
             $output = str_replace($find, $html . $find, $output);
 
 
