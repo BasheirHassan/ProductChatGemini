@@ -7,7 +7,8 @@
     "scripts": {
         "dev": "vite",
         "zip": "npm-build-zip --source=4xxx --name=product_chat_gemini.ocmod --name_only=true ",
-        "preview": "vite preview"
+        "preview": "vite preview",
+        "clean": "rimraf dist && del /s /q *~"
     },
     "devDependencies": {
         "npm-build-zip": "^1.0.4"

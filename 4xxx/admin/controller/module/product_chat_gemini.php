@@ -16,9 +16,9 @@ class ProductChatGemini extends \Opencart\System\Engine\Controller {
         $this->load->language('catalog/product');
 		$this->document->setTitle(strip_tags($languageModel['heading_title']));
 
-        $this->document->addScript(HTTP_CATALOG.'/extension/product_chat_gemini/admin/view/javascript/loading/gemini.js');
-        $this->document->addScript(HTTP_CATALOG.'/extension/product_chat_gemini/admin/view/javascript/loading/jquery.loading.min.js');
-        $this->document->addStyle(HTTP_CATALOG.'/extension/product_chat_gemini/admin/view/javascript/loading/loading.css');
+        $this->document->addScript(HTTP_CATALOG.'/extension/product_chat_gemini/admin/view/javascript/gemini.js');
+        $this->document->addScript(HTTP_CATALOG.'/extension/product_chat_gemini/admin/view/javascript/jquery.loading.min.js');
+        $this->document->addStyle(HTTP_CATALOG.'/extension/product_chat_gemini/admin/view/javascript/loading.css');
 
         $this->load->model('localisation/language');
         $languages = $data['languages'] = $this->model_localisation_language->getLanguages();

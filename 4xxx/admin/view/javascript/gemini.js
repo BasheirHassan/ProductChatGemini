@@ -4,8 +4,6 @@ function loadGemini(languageID, languageName, objectName, description, route) {
         return;
     }
 
-
-
     const productNameInput = $(`#input-name-${languageID}`);
     const targetObject = $(`#${objectName}-${languageID}`);
     const parseRoute = route.replace("amp;", '');

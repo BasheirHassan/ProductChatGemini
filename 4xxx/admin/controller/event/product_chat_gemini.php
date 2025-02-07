@@ -40,7 +40,6 @@ class ProductChatGemini extends \Opencart\System\Engine\Controller
 
 
 
-
             $html = '<link rel="stylesheet" href="' . HTTP_CATALOG . '/extension/product_chat_gemini/admin/view/css/loading.css">' . PHP_EOL;
             $html .= '<script src="' . HTTP_CATALOG . '/extension/product_chat_gemini/admin/view/javascript/jquery.loading.min.js"></script>' . PHP_EOL;
             $html .= '<script src="' . HTTP_CATALOG . '/extension/product_chat_gemini/admin/view/javascript/gemini.js"></script>' . PHP_EOL;
