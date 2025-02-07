@@ -5,7 +5,6 @@ function loadGemini(languageID, languageName, objectName, description, route) {
     }
 
 
-    console.log(description,'A');
 
     const productNameInput = $(`#input-name-${languageID}`);
     const targetObject = $(`#${objectName}-${languageID}`);
@@ -64,25 +63,37 @@ function loadGeminiStatus(languages, modelConfig, route) {
 
             const btnStyle = "d-flex flex-row justify-content-center align-items-center input-group-addon btn btn-primary btn-sm fa fa-info-circle text-center chat-gemini-btn";
 
-            createHintButton(`#input-name-${languageID}`, btnStyle, () => loadGemini(languageID, languageName, "input-description", description, route));
+            console.log(description)
+
+
             createInputEventHandlers(languageID, description, metaTitle, metaDescription, metaKeyword, tag);
 
-            createHintButton(`#input-meta-title-${languageID}`, btnStyle, () => loadGemini(languageID, languageName, "input-meta-title", metaTitle, route));
-            createHintButton(`#input-meta-description-${languageID}`, btnStyle, () => loadGemini(languageID, languageName, "input-meta-description", metaDescription, route));
-            createHintButton(`#input-meta-keyword-${languageID}`, btnStyle, () => loadGemini(languageID, languageName, "input-meta-keyword", metaKeyword, route));
-            createHintButton(`#input-tag-${languageID}`, btnStyle, () => loadGemini(languageID, languageName, "input-tag", tag, route));
+            createHintButton(`#input-name-${languageID}`, btnStyle,description ,() => loadGemini(languageID, languageName, "input-description", description, route));
+            createHintButton(`#input-meta-title-${languageID}`, btnStyle,metaTitle ,() => loadGemini(languageID, languageName, "input-meta-title", metaTitle, route));
+            createHintButton(`#input-meta-description-${languageID}`, btnStyle,metaDescription, () => loadGemini(languageID, languageName, "input-meta-description", metaDescription, route));
+            createHintButton(`#input-meta-keyword-${languageID}`, btnStyle,metaKeyword, () => loadGemini(languageID, languageName, "input-meta-keyword", metaKeyword, route));
+            createHintButton(`#input-tag-${languageID}`, btnStyle,tag, () => loadGemini(languageID, languageName, "input-tag", tag, route));
         }
     });
 }
 
-function createHintButton(selector, btnStyle, onClickHandler) {
+function createHintButton(selector, btnStyle,title, onClickHandler) {
+
+    const val = $(selector).val();
+    const newTitle = replaceBracesText(title, `[${val}]`);
     $(selector).parent('div').addClass('input-group').append(
         $('<span/>')
             .attr('role', 'button')
+            .attr('title', newTitle)
             .addClass(btnStyle)
             .click(onClickHandler)
     );
 }
+
+function replaceBracesText(str, replacement) {
+    return  str.replace(/\{.*?\}/g, replacement);
+}
+
 
 function createInputEventHandlers(languageID, description, metaTitle, metaDescription, metaKeyword, tag) {
     const nameInputSelector = `[name='product_description[${languageID}][name]'`;
