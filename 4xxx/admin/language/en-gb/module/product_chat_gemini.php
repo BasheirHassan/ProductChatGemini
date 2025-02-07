@@ -31,6 +31,8 @@ $_['error_permission']	= 'Warning: You do not have permission to modify this mod
 
 
 
+$_['response_ok'] = 'The data has been successfully brought';
+$_['response_error'] ='The process was not successfully completed ';
 
 // setting Model
 

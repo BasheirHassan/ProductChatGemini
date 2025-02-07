@@ -33,6 +33,12 @@ $_['error_permission']	= 'Warning: You do not have permission to modify this mod
 
 
 
+// Response Gemini
+
+$_['response_ok']		= 'تم جلب البيانات بنجاح';
+$_['response_error']		= 'لم تتم العملية بنجاح';
+
+
 // setting Model
 
 $_['inpt_description']			= ' وصف المنتج {name} بشكل مبسط وسهل تنسيق سطري ';

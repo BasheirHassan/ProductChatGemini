@@ -107,3 +107,38 @@ function updateHint(selector, productName, description) {
 function getGeminiAll() {
     $(".chat-gemini-btn").click();
 }
+
+
+
+
+function testApi() {
+    const apiKey = $("#input-api_key").val().trim(); if (!apiKey) { return; }
+
+    let apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`;
+    let requestData = {
+        contents: [{ role: "user", parts: [{ text: 'test Api' }] }]
+    };
+
+    $('#alertX').loading('start');
+
+    $.ajax({
+        url: apiUrl,
+        type: "POST",
+        contentType: "application/json",
+        data: JSON.stringify(requestData),
+        success: function(response) {
+            console.log( JSON.stringify(response, null, 2));
+            $('#alertX').loading('stop');
+            $('#alertX').html('Successful!').removeClass('text-danger').addClass('text-success');
+        },
+        error: function(xhr, status, error) {
+            // alert(xhr.responseJSON.error.message);
+            $('#alertX').html(xhr.responseJSON.error.message).removeClass('text-success').addClass('text-danger');
+            $('#alertX').loading('stop');
+            setTimeout(()=>{
+                $('#alertX').html('');
+            },5000)
+        }
+    })
+
+}

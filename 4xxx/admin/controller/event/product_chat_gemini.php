@@ -17,11 +17,16 @@ class ProductChatGemini extends \Opencart\System\Engine\Controller
         $json_languages = json_encode($languages);
 
 
+
+
+
+
         if ($this->config->get($this->module . '_status')) {
 
             $language_modeul = $this->load->language($this->path);
             $this->load->language('catalog/product');
             $url_route = $this->url->link('extension/product_chat_gemini/event/product_chat_gemini|get_data_from_gemini', 'user_token=' . $this->session->data['user_token'], false);
+            $url_extension = $this->url->link($this->path, 'user_token=' . $this->session->data['user_token'], false);
 
 
             $data['input_description'] = $this->config->get($this->module . "_" . "input_description");
@@ -35,9 +40,10 @@ class ProductChatGemini extends \Opencart\System\Engine\Controller
 
 
 
-            $html = '<link rel="stylesheet" href="../extension/product_chat_gemini/admin/view/javascript/loading/loading.css">' . PHP_EOL;
-            $html .= '<script src="../extension/product_chat_gemini/admin/view/javascript/loading/jquery.loading.min.js"></script>' . PHP_EOL;
-            $html .= '<script src="../extension/product_chat_gemini/admin/view/javascript/loading/gemini.js"></script>' . PHP_EOL;
+
+            $html = '<link rel="stylesheet" href="' . HTTP_CATALOG . '/extension/product_chat_gemini/admin/view/css/loading.css">' . PHP_EOL;
+            $html .= '<script src="' . HTTP_CATALOG . '/extension/product_chat_gemini/admin/view/javascript/jquery.loading.min.js"></script>' . PHP_EOL;
+            $html .= '<script src="' . HTTP_CATALOG . '/extension/product_chat_gemini/admin/view/javascript/gemini.js"></script>' . PHP_EOL;
             $html .= "<script type='text/javascript'> 
               $(document).ready(function () {
                     loadGeminiStatus('$json_languages','$model_config','$url_route');
@@ -51,8 +57,9 @@ class ProductChatGemini extends \Opencart\System\Engine\Controller
 
 
 
-            $find ='<button type="submit" form="form-product" data-bs-toggle="tooltip" title="'.$args['button_save'].'" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i></button>';
-            $html ='<button type="button" onclick="getGeminiAll()" data-bs-toggle="tooltip" title="'.$language_modeul['btn_run_all'].'" class="btn btn-primary m-1"><i class="fa-solid fa-bookmark"></i></button>';
+            $find  ='<button type="submit" form="form-product" data-bs-toggle="tooltip" title="'.$args['button_save'].'" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i></button>';
+            $html  ='<a href="'.$url_extension.'" data-bs-toggle="tooltip" class="btn btn-danger" aria-label="Back" data-bs-original-title="Setting Extension"><i class="fa-solid fa fa-cog"></i></a>';
+            $html .='<button type="button" onclick="getGeminiAll()" data-bs-toggle="tooltip" title="'.$language_modeul['btn_run_all'].'" class="btn btn-primary m-1"><i class="fa-solid fa-bookmark"></i></button>';
             $output = str_replace($find, $html . $find, $output);
 
             $find ='<button type="submit" form="form-category" data-bs-toggle="tooltip" title="'.$args['button_save'].'" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i></button>';
@@ -71,10 +78,13 @@ class ProductChatGemini extends \Opencart\System\Engine\Controller
     public function get_data_from_gemini(): void
     {
         // Get the API key, and retrieve the user's prompt
+        $lang = $this->load->language($this->path);
         $key = $this->config->get('module_product_chat_gemini_api_key');
         $status = false;
         $text = "";
-        $message ="تم جلب البيانات بنجاح";
+        $message = $lang['response_ok'];
+
+
 
         if ($this->config->get('module_product_chat_gemini_api_key') && isset($this->request->post['gemini_content'])) {
             $prompt = $this->request->post['gemini_content'];
@@ -108,14 +118,14 @@ class ProductChatGemini extends \Opencart\System\Engine\Controller
             if(curl_errno($ch)) {
                 $err = 'Request Error: ' . curl_error($ch);
                 $status =false;
-                $message ="لم يتم جلب البيانات بنجاح" . $err .$response;
+                $message =$lang['response_ok'] . $err .$response;
             } else {
                 $status=true;
                 // Parse the JSON response
                 $data = json_decode($response, true);
                 $text = $data['candidates'][0]['content']['parts'][0]['text'] ?? ( $status= false);
                 if (!$status){
-                    $message ="لم يتم جلب البيانات بنجاح " .PHP_EOL. $data['error']['message'];
+                    $message =$lang['response_error'] .PHP_EOL. $data['error']['message'];
                 }
 
             }
