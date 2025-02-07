@@ -63,9 +63,6 @@ function loadGeminiStatus(languages, modelConfig, route) {
 
             const btnStyle = "d-flex flex-row justify-content-center align-items-center input-group-addon btn btn-primary btn-sm fa fa-info-circle text-center chat-gemini-btn";
 
-            console.log(description)
-
-
             createInputEventHandlers(languageID, description, metaTitle, metaDescription, metaKeyword, tag);
 
             createHintButton(`#input-name-${languageID}`, btnStyle,description ,() => loadGemini(languageID, languageName, "input-description", description, route));
@@ -97,10 +94,8 @@ function replaceBracesText(str, replacement) {
 
 function createInputEventHandlers(languageID, description, metaTitle, metaDescription, metaKeyword, tag) {
     const nameInputSelector = `[name='product_description[${languageID}][name]'`;
-
     $(nameInputSelector).on("keyup", function () {
-        const productName = $(this).val();
-
+        const productName = "["+$(this).val()+"]";
         updateHint(`#input-name-${languageID}`, productName, description);
         updateHint(`#input-meta-title-${languageID}`, productName, metaTitle);
         updateHint(`#input-meta-description-${languageID}`, productName, metaDescription);
