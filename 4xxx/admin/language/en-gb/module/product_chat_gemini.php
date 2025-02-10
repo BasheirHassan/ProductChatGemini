@@ -1,6 +1,6 @@
 <?php
 #############################################################
-#	Enable Disable Products 1.09 for Opencart 4x by AlexDW	#
+#	Enable Disable Product Chat Gemini Opencart 4x by Basheir Hassan	#
 #############################################################
 $_['heading_title']		= '<i class="fa fa-cubes fa-lg" style="color: #5BC0DE"></i> Product Chat Gemini';
 
@@ -16,7 +16,8 @@ $_['help_model_use']			= ' - Use model';
 
 
 // Entry
-$_['entry_status']		= 'Status';
+$_['entry_status']		= 'Enable/Disable Extension Status';
+$_['help_entry_status']		= 'Enable/Disable Extension Status';
 
 $_['entry_api_key']		= 'Gemini API key';
 

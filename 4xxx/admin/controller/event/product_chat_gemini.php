@@ -24,9 +24,6 @@ class ProductChatGemini extends \Opencart\System\Engine\Controller
 
            $this->load->language($this->path);
 
-
-
-
             $lang['help_setting_extension'] =  $this->language->get('help_setting_extension');
             $lang['error_content'] =  $this->language->get('error_content');
             $lang['btn_run_all'] =  $this->language->get('btn_run_all');
