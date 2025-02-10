@@ -34,6 +34,8 @@ class ProductChatGemini extends \Opencart\System\Engine\Controller
             $data['input_meta_description'] = $this->config->get($this->module . "_" . "input_meta_description");
             $data['input_meta_title'] = $this->config->get($this->module . "_" . "input_meta_title");
             $data['input_tag'] = $this->config->get($this->module . "_" . "input_tag");
+            $data['select_model'] = $this->config->get($this->module . "_" . "select_model");
+            $data['select_model_name'] = $this->config->get($this->module . "_" . "select_model_name");
 
             $model_config = json_encode($data);
 
@@ -58,7 +60,7 @@ class ProductChatGemini extends \Opencart\System\Engine\Controller
 
             $find  ='<button type="submit" form="form-product" data-bs-toggle="tooltip" title="'.$args['button_save'].'" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i></button>';
             $html  ='<a href="'.$url_extension.'" data-bs-toggle="tooltip" class="btn btn-danger" aria-label="Back" data-bs-original-title="Setting Extension"><i class="fa-solid fa fa-cog"></i></a>';
-            $html .='<button type="button" onclick="getGeminiAll()" data-bs-toggle="tooltip" title="'.$language_modeul['btn_run_all'].'" class="btn btn-primary m-1"><i class="fa-solid fa-bookmark"></i></button>';
+            $html .='<button type="button" onclick="getGeminiAll()" data-bs-toggle="tooltip" title="'.$language_modeul['btn_run_all'] .$language_modeul['help_model_use'].'['. $data['select_model_name'].']" class="btn btn-primary m-1"><i class="fa-solid fa-bookmark"></i></button>';
             $output = str_replace($find, $html . $find, $output);
 
             $find ='<button type="submit" form="form-category" data-bs-toggle="tooltip" title="'.$args['button_save'].'" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i></button>';

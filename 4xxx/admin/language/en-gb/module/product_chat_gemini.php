@@ -12,6 +12,7 @@ $_['text_edit']			= 'Edit module';
 $_['btn_dev']			= 'https://ai.google.dev/';
 
 $_['btn_run_all']			= 'Run All Gemini';
+$_['help_model_use']			= ' - Use model';
 
 
 // Entry

@@ -12,6 +12,7 @@ $_['text_edit']			= 'Edit module';
 
 $_['btn_dev']			= 'https://ai.google.dev/';
 $_['btn_run_all']			= 'جلب كل البيانات من Gemini';
+$_['help_model_use']			= ' -  Model استخدام النماذج';
 
 
 // Entry
