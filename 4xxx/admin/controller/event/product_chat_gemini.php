@@ -20,7 +20,6 @@ class ProductChatGemini extends \Opencart\System\Engine\Controller
 
 
 
-
         if ($this->config->get($this->module . '_status')) {
 
            $this->load->language($this->path);
@@ -45,7 +44,7 @@ class ProductChatGemini extends \Opencart\System\Engine\Controller
             $data['select_model_name'] = $this->config->get($this->module . "_" . "select_model_name");
 
             $model_config = json_encode($data);
-
+            $lang_help_setting_extension =  $this->language->get('help_active_extension');
 
 
 
@@ -54,7 +53,7 @@ class ProductChatGemini extends \Opencart\System\Engine\Controller
             $html .= '<script src="' . HTTP_CATALOG . '/extension/product_chat_gemini/admin/view/javascript/gemini.js"></script>' . PHP_EOL;
             $html .= "<script type='text/javascript'> 
               $(document).ready(function () {
-                    loadGeminiStatus('$json_languages','$model_config','$url_route');
+                    loadGeminiStatus('$json_languages','$model_config','$url_route','$lang_help_setting_extension');
               });
              </script>" . PHP_EOL;
 
@@ -85,35 +84,38 @@ class ProductChatGemini extends \Opencart\System\Engine\Controller
 
     public function get_data_from_gemini(): void
     {
-
-
         // Get the API key, and retrieve the user's prompt
         $this->load->language($this->path);
-        $key = $this->config->get('module_product_chat_gemini_api_key');
+        $api_key = $this->config->get('module_product_chat_gemini_api_key');
         $select_model = $this->config->get('module_product_chat_gemini_select_model');
 
         $status = false;
         $text = "";
-        $message = $this->language->get('response_ok');
+        $message = $this->language->get('response_error');
+        $send_post = true;
 
 
-        if ($this->config->get('module_product_chat_gemini_api_key') && isset($this->request->post['gemini_content'])) {
+        if (empty($api_key)){
+            $message = $this->language->get('error_api_key');
+            $send_post= false;
+        }
+
+        if (empty($select_model)){
+            $message = $this->language->get('error_select_model');
+            $send_post= false;
+        }
+
+        if (!isset($this->request->post['gemini_content'])){
+            $message = $this->language->get('error_content');
+            $send_post= false;
+        }
+
+
+
+        if ($send_post) {
             $prompt = $this->request->post['gemini_content'];
-
-            // Encode the prompt in JSON, and create the request
-            $json_data = json_encode([
-                'contents' => [
-                    [
-                        'parts' => [
-                            [
-                                'text' => $prompt
-                            ]
-                        ]
-                    ]
-                ]
-            ]);
-             $url = "https://generativelanguage.googleapis.com/v1beta/$select_model:generateContent?key=$key";
-
+            $json_data = json_encode(array('contents' => array(array('parts' => array(array('text' => $prompt))))));
+            $url = "https://generativelanguage.googleapis.com/v1beta/$select_model:generateContent?key=$api_key";
 
             // Send the request, and get the response
             $ch = curl_init($url);
@@ -128,13 +130,13 @@ class ProductChatGemini extends \Opencart\System\Engine\Controller
 
             if(curl_errno($ch)) {
                 $err = 'Request Error: ' . curl_error($ch);
-                $status =false;
-                $message =$this->language->get('response_ok') . $err .$response;
+                $message =$this->language->get('response_error') . $err .$response;
             } else {
                 $status=true;
                 // Parse the JSON response
                 $data = json_decode($response, true);
                 $text = $data['candidates'][0]['content']['parts'][0]['text'] ?? ( $status= false);
+                $message =$this->language->get('response_ok');
                 if (!$status){
                     $message =$this->language->get('response_error') .PHP_EOL. $data['error']['message'];
                 }

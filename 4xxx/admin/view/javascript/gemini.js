@@ -1,6 +1,6 @@
-function loadGemini(languageID, languageName, objectName, description, route) {
+function loadGemini(languageID, languageName, objectName, description, route,message_active_extension) {
     if (!description) {
-        alert("قم بتفعيل الإضافة");
+        alert(message_active_extension);
         return;
     }
 
@@ -19,7 +19,6 @@ function loadGemini(languageID, languageName, objectName, description, route) {
         dataType: 'json',
         success: function (response) {
             $(loadingTarget).loading('stop');
-
             if (!response.status) {
                 alert(response.message);
                 return;

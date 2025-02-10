@@ -46,3 +46,11 @@ $_['inpt_tag']			        = '{name} Keywords separated by a comma';
 $_['help_select_model']			= 'Select Model ';
 $_['help_get_model']    			= 'Get model';
 $_['help_setting_extension']    			= 'Setting Extension Product Chat Gemini';
+$_['help_active_extension']    			= 'Please activate the addition and determine the type of model used';
+
+
+
+// error_api_key
+$_['error_api_key'] = 'Please enter your Gemini API key';
+$_['error_select_model'] = 'Please select a model';
+$_['error_content'] = 'Please enter the content';
