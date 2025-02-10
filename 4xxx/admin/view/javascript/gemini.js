@@ -46,7 +46,7 @@ function loadGeminiStatus(languages, modelConfig, route) {
     const modelConfigs = JSON.parse(modelConfig);
 
 
-    console.log(modelConfigs)
+    // console.log(modelConfigs)
 
     $(document).ready(function () {
         for (const language in languageConfigs) {

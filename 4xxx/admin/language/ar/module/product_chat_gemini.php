@@ -50,3 +50,4 @@ $_['inpt_tag']			        = '{name} كلمات مفتاحية مفصولة كل �
 
 $_['help_select_model']			= 'اختر نموذج Gemini';
 $_['help_get_model']    			= '     جلب النماذج';
+$_['help_setting_extension']    			= 'تعديل الاعدادات  Product Chat Gemini ';

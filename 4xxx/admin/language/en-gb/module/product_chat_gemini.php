@@ -45,3 +45,4 @@ $_['inpt_tag']			        = '{name} Keywords separated by a comma';
 
 $_['help_select_model']			= 'Select Model ';
 $_['help_get_model']    			= 'Get model';
+$_['help_setting_extension']    			= 'Setting Extension Product Chat Gemini';
