@@ -25,11 +25,14 @@ class ProductChatGemini extends \Opencart\System\Engine\Controller
            $this->load->language($this->path);
 
 
-            $lang_help_setting_extension =  $this->language->get('help_setting_extension');
-            $lang_error_content =  $this->language->get('error_content');
-            $lang_btn_run_all =  $this->language->get('btn_run_all');
-            $lang_help_model_use =  $this->language->get('help_model_use');
 
+
+            $lang['help_setting_extension'] =  $this->language->get('help_setting_extension');
+            $lang['error_content'] =  $this->language->get('error_content');
+            $lang['btn_run_all'] =  $this->language->get('btn_run_all');
+            $lang['help_active_extension'] =  $this->language->get('help_active_extension');
+            $lang['help_model_use'] =  $this->language->get('help_model_use');
+            $messages= json_encode($lang);
 
             $this->load->language('catalog/product');
             $url_route = $this->url->link('extension/product_chat_gemini/event/product_chat_gemini|get_data_from_gemini', 'user_token=' . $this->session->data['user_token'], false);
@@ -45,7 +48,6 @@ class ProductChatGemini extends \Opencart\System\Engine\Controller
             $data['select_model_name'] = $this->config->get($this->module . "_" . "select_model_name");
 
             $model_config = json_encode($data);
-            $lang_help_setting_extension =  $this->language->get('help_active_extension');
 
 
 
@@ -53,8 +55,9 @@ class ProductChatGemini extends \Opencart\System\Engine\Controller
             $html .= '<script src="' . HTTP_CATALOG . '/extension/product_chat_gemini/admin/view/javascript/jquery.loading.min.js"></script>' . PHP_EOL;
             $html .= '<script src="' . HTTP_CATALOG . '/extension/product_chat_gemini/admin/view/javascript/gemini.js"></script>' . PHP_EOL;
             $html .= "<script type='text/javascript'> 
+              let messages = $messages;
               $(document).ready(function () {
-                    loadGeminiStatus('$json_languages','$model_config','$url_route','$lang_help_setting_extension','$lang_error_content');
+                    loadGeminiStatus('$json_languages','$model_config','$url_route');
               });
              </script>" . PHP_EOL;
 
@@ -66,12 +69,12 @@ class ProductChatGemini extends \Opencart\System\Engine\Controller
 
 
             $find  ='<button type="submit" form="form-product" data-bs-toggle="tooltip" title="'.$args['button_save'].'" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i></button>';
-            $html  ='<a href="'.$url_extension.'" data-bs-toggle="tooltip" class="btn btn-danger" aria-label="Back" data-bs-original-title="'.$lang_help_setting_extension.'"><i class="fa-solid fa fa-cogs"></i></a>';
-            $html .='<button type="button" onclick="getGeminiAll()" data-bs-toggle="tooltip" title="'.$lang_btn_run_all .$lang_help_model_use.'['. $data['select_model_name'].']" class="btn btn-primary m-1"><i class="fa-solid fa-bookmark"></i></button>';
+            $html  ='<a href="'.$url_extension.'" data-bs-toggle="tooltip" class="btn btn-danger" aria-label="Back" data-bs-original-title="'.$lang['help_setting_extension'].'"><i class="fa-solid fa fa-cogs"></i></a>';
+            $html .='<button type="button" onclick="getGeminiAll()" data-bs-toggle="tooltip" title="'.$lang['btn_run_all'] .$lang['help_model_use'].'['. $data['select_model_name'].']" class="btn btn-primary m-1"><i class="fa-solid fa-bookmark"></i></button>';
             $output = str_replace($find, $html . $find, $output);
 
             $find ='<button type="submit" form="form-category" data-bs-toggle="tooltip" title="'.$args['button_save'].'" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i></button>';
-            $html ='<button type="button" onclick="getGeminiAll()" data-bs-toggle="tooltip" title="'.$lang_btn_run_all.'" class="btn btn-primary m-1"><i class="fa-solid fa-bookmark"></i></button>';
+            $html ='<button type="button" onclick="getGeminiAll()" data-bs-toggle="tooltip" title="'.$lang['btn_run_all'].'" class="btn btn-primary m-1"><i class="fa-solid fa-bookmark"></i></button>';
             $output = str_replace($find, $html . $find, $output);
 
 

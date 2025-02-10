@@ -1,6 +1,6 @@
-function loadGemini(languageID, languageName, objectName, description, route,message_active_extension,error_content) {
+function loadGemini(languageID, languageName, objectName, description, route) {
     if (!description) {
-        alert(message_active_extension);
+        alert(messages.help_active_extension);
         return;
     }
 
@@ -10,9 +10,8 @@ function loadGemini(languageID, languageName, objectName, description, route,mes
     const descriptionReplaced = description.replace(/\{.*?\}/, productNameInput.val());
     const loadingTarget = (objectName === "input-description") ? targetObject.parent('div') : targetObject;
 
-
     if (!productNameInput.val()) {
-        alert(error_content);
+        alert(messages.error_content);
         return;
     }
 
@@ -46,7 +45,7 @@ function loadGemini(languageID, languageName, objectName, description, route,mes
     });
 }
 
-function loadGeminiStatus(languages, modelConfig, route,message_active_extension,error_content) {
+function loadGeminiStatus(languages, modelConfig, route) {
     const languageConfigs = JSON.parse(languages);
     const modelConfigs = JSON.parse(modelConfig);
 
@@ -69,11 +68,11 @@ function loadGeminiStatus(languages, modelConfig, route,message_active_extension
             let val = $(`#input-name-${languageID}`).val();
             createInputEventHandlers(languageID, description, metaTitle, metaDescription, metaKeyword, tag);
 
-            createHintButton(`#input-name-${languageID}`, description ,val,() => loadGemini(languageID, languageName, "input-description", description, route,message_active_extension,error_content));
-            createHintButton(`#input-meta-title-${languageID}`,metaTitle ,val,() => loadGemini(languageID, languageName, "input-meta-title", metaTitle, route,message_active_extension,error_content));
-            createHintButton(`#input-meta-description-${languageID}`,metaDescription,val, () => loadGemini(languageID, languageName, "input-meta-description", metaDescription, route,message_active_extension,error_content));
-            createHintButton(`#input-meta-keyword-${languageID}`,metaKeyword,val, () => loadGemini(languageID, languageName, "input-meta-keyword", metaKeyword, route,message_active_extension,error_content));
-            createHintButton(`#input-tag-${languageID}`,tag,val, () => loadGemini(languageID, languageName, "input-tag", tag, route,message_active_extension,error_content));
+            createHintButton(`#input-name-${languageID}`, description ,val,() => loadGemini(languageID, languageName, "input-description", description, route));
+            createHintButton(`#input-meta-title-${languageID}`,metaTitle ,val,() => loadGemini(languageID, languageName, "input-meta-title", metaTitle, route));
+            createHintButton(`#input-meta-description-${languageID}`,metaDescription,val, () => loadGemini(languageID, languageName, "input-meta-description", metaDescription, route));
+            createHintButton(`#input-meta-keyword-${languageID}`,metaKeyword,val, () => loadGemini(languageID, languageName, "input-meta-keyword", metaKeyword, route));
+            createHintButton(`#input-tag-${languageID}`,tag,val, () => loadGemini(languageID, languageName, "input-tag", tag, route));
         }
     });
 }
