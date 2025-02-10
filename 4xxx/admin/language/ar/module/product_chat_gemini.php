@@ -47,3 +47,5 @@ $_['inpt_meta_description']		= '{name} وصف ميتا تاج بسيط  ';
 $_['inpt_meta_keyword']			= 'الكلمة الرئيسية التعريفية {name}';
 $_['inpt_tag']			        = '{name} كلمات مفتاحية مفصولة كل كلمة بفاصلة';
 
+$_['help_select_model']			= 'اختر نموذج Gemini';
+$_['help_get_model']    			= '     جلب النماذج';

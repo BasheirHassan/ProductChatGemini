@@ -76,12 +76,19 @@ class ProductChatGemini extends \Opencart\System\Engine\Controller
 
     public function get_data_from_gemini(): void
     {
+
+
         // Get the API key, and retrieve the user's prompt
         $lang = $this->load->language($this->path);
         $key = $this->config->get('module_product_chat_gemini_api_key');
+        $select_model = $this->config->get('module_product_chat_gemini_select_model');
+
+
         $status = false;
         $text = "";
         $message = $lang['response_ok'];
+
+
 
 
 
@@ -100,8 +107,8 @@ class ProductChatGemini extends \Opencart\System\Engine\Controller
                     ]
                 ]
             ]);
+             $url = "https://generativelanguage.googleapis.com/v1beta/$select_model:generateContent?key=$key";
 
-            $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=$key";
 
             // Send the request, and get the response
             $ch = curl_init($url);

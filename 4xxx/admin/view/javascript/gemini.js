@@ -46,36 +46,37 @@ function loadGeminiStatus(languages, modelConfig, route) {
     const modelConfigs = JSON.parse(modelConfig);
 
 
+    console.log(modelConfigs)
+
     $(document).ready(function () {
         for (const language in languageConfigs) {
 
-            const languageID = languageConfigs[language].language_id;
-            const languageName = languageConfigs[language].name;
+            let languageID = languageConfigs[language].language_id;
+            let languageName = languageConfigs[language].name;
 
 
-            const description = modelConfigs.input_description[languageID];
-            const metaTitle = modelConfigs.input_meta_title[languageID];
-            const metaDescription = modelConfigs.input_meta_description[languageID];
-            const metaKeyword = modelConfigs.input_meta_keyword[languageID];
-            const tag = modelConfigs.input_tag[languageID];
+            let description = modelConfigs.input_description[languageID];
+            let metaTitle = modelConfigs.input_meta_title[languageID];
+            let metaDescription = modelConfigs.input_meta_description[languageID];
+            let metaKeyword = modelConfigs.input_meta_keyword[languageID];
+            let tag = modelConfigs.input_tag[languageID];
 
-            const btnStyle = "d-flex flex-row justify-content-center align-items-center input-group-addon btn btn-primary btn-sm fa fa-info-circle text-center chat-gemini-btn";
-
+            let val = $(`#input-name-${languageID}`).val();
             createInputEventHandlers(languageID, description, metaTitle, metaDescription, metaKeyword, tag);
 
-            createHintButton(`#input-name-${languageID}`, btnStyle,description ,() => loadGemini(languageID, languageName, "input-description", description, route));
-            createHintButton(`#input-meta-title-${languageID}`, btnStyle,metaTitle ,() => loadGemini(languageID, languageName, "input-meta-title", metaTitle, route));
-            createHintButton(`#input-meta-description-${languageID}`, btnStyle,metaDescription, () => loadGemini(languageID, languageName, "input-meta-description", metaDescription, route));
-            createHintButton(`#input-meta-keyword-${languageID}`, btnStyle,metaKeyword, () => loadGemini(languageID, languageName, "input-meta-keyword", metaKeyword, route));
-            createHintButton(`#input-tag-${languageID}`, btnStyle,tag, () => loadGemini(languageID, languageName, "input-tag", tag, route));
+            createHintButton(`#input-name-${languageID}`, description ,val,() => loadGemini(languageID, languageName, "input-description", description, route));
+            createHintButton(`#input-meta-title-${languageID}`,metaTitle ,val,() => loadGemini(languageID, languageName, "input-meta-title", metaTitle, route));
+            createHintButton(`#input-meta-description-${languageID}`,metaDescription,val, () => loadGemini(languageID, languageName, "input-meta-description", metaDescription, route));
+            createHintButton(`#input-meta-keyword-${languageID}`,metaKeyword,val, () => loadGemini(languageID, languageName, "input-meta-keyword", metaKeyword, route));
+            createHintButton(`#input-tag-${languageID}`,tag,val, () => loadGemini(languageID, languageName, "input-tag", tag, route));
         }
     });
 }
 
-function createHintButton(selector, btnStyle,title, onClickHandler) {
+function createHintButton(selector,title,inpuName, onClickHandler) {
+    const btnStyle = "d-flex flex-row justify-content-center align-items-center input-group-addon btn btn-primary btn-sm fa fa-info-circle text-center chat-gemini-btn";
+    const newTitle = replaceBracesText(title, `[${inpuName}]`);
 
-    const val = $(selector).val();
-    const newTitle = replaceBracesText(title, `[${val}]`);
     $(selector).parent('div').addClass('input-group').append(
         $('<span/>')
             .attr('role', 'button')
@@ -123,7 +124,7 @@ function testApi() {
         contents: [{ role: "user", parts: [{ text: 'test Api' }] }]
     };
 
-    $('#alertX').loading('start');
+    $('#module_product_chat_gemini_select_model').loading('start');
 
     $.ajax({
         url: apiUrl,
@@ -131,9 +132,9 @@ function testApi() {
         contentType: "application/json",
         data: JSON.stringify(requestData),
         success: function(response) {
-            console.log( JSON.stringify(response, null, 2));
-            $('#alertX').loading('stop');
+            $('#module_product_chat_gemini_select_model').loading('stop');
             $('#alertX').html('Successful!').removeClass('text-danger').addClass('text-success');
+            listModels(apiKey);
         },
         error: function(xhr, status, error) {
             // alert(xhr.responseJSON.error.message);

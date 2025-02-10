@@ -1,9 +1,6 @@
 {{ header }}{{ column_left }}
 <div id="content">
 
-
-
-
 	<div class="page-header">
 		<div class="container-fluid">
 			<div class="float-end">
@@ -44,12 +41,21 @@
 							<label class="col-sm-3 col-form-label d-flex" for="input-api_key">{{ entry_api_key }}</label>
 							<input type="text" name="module_product_chat_gemini_api_key" placeholder="{{ entry_api_key }}"
 								   id="input-api_key" class="form-control" value="{{ module_product_chat_gemini_api_key }}">
-							<span class="input-group-text" id="basic-addon2" onclick="testApi()" role="button">Test</span>
-
+							<span class="input-group-text" id="basic-addon2" onclick="testApi()" role="button">{{ help_get_model }}</span>
 							{% if error_api_key %}
 								<div class="text-danger" >{{ error_api_key }}</div>
 							{% endif %}
 						</div>
+
+						<div class="col-sm-10 input-group mb-3">
+							<label class="col-sm-3 col-form-label d-flex" for="input-api_key">{{ help_select_model }}</label>
+							<select class="form-select" name="module_product_chat_gemini_select_model" data-model="{{ module_product_chat_gemini_select_model }}"
+									id="module_product_chat_gemini_select_model">
+							</select>
+						</div>
+
+
+
 						<div class="text-danger" id="alertX"></div>
 
 					</div>
@@ -144,4 +150,6 @@
 		</div>
 	</div>
 </div>
+
+
 {{ footer }}

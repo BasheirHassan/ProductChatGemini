@@ -3,10 +3,17 @@
   <component name="WebServers">
     <option name="servers">
       <webServer id="ca4fa3ab-21d7-4cd3-8023-f1dd9cdbf053" name="bghouta" url="http://localhost">
-        <fileTransfer mountedRoot="\\wsl$\Ubuntu\var\www\html\opencart\extension" accessType="MOUNT" port="0" />
+        <fileTransfer mountedRoot="\\wsl$\Ubuntu\www\wwwroot\site2.test\extension" accessType="MOUNT" port="0" />
       </webServer>
       <webServer id="11bf8ad9-3028-4cd9-afe7-a25ae554b6df" name="Wsl" url="http://127.0.0.1">
         <fileTransfer host="127.0.0.1" port="21">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+      <webServer id="47ab146d-bab2-404f-8de3-978e7c3c1a53" name="site2" url="http://172.18.237.21">
+        <fileTransfer rootFolder="/site2.test/extension/product_chat_gemini" host="172.18.237.21" port="21">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
           </advancedOptions>

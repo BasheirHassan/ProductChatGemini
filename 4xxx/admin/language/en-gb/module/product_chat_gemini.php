@@ -41,3 +41,6 @@ $_['inpt_meta_keywords']		= 'Keywords {name} separated by each word -';
 $_['inpt_meta_description']		= 'Meta Description {name} Simple Tag';
 $_['inpt_meta_keyword']			= 'Meta keyword {name} ';
 $_['inpt_tag']			        = '{name} Keywords separated by a comma';
+
+$_['help_select_model']			= 'Select Model ';
+$_['help_get_model']    			= 'Get model';
