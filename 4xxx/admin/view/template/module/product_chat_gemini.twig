@@ -4,7 +4,13 @@
 	<div class="page-header">
 		<div class="container-fluid">
 			<div class="float-end">
-				<a href="{{ btn_dev }}" target="_blank" class="btn btn-primary" title="Get gemini API Key" role="button"><i class="fa fa-brands fa-google"></i></a>
+				{% if module_product_chat_gemini_api_key is empty %}
+					<div class="text-danger" >{{ error_api_key }}</div>
+					<a href="{{ btn_dev }}" target="_blank" class="btn btn-primary heart-beat x-google" title="Get gemini API Key" role="button"><i class="fa fa-brands fa-google"></i></a>
+				{% else %}
+					<a href="{{ btn_dev }}" target="_blank" class="btn btn-primary " title="Get gemini API Key" role="button"><i class="fa fa-brands fa-google"></i></a>
+				{% endif %}
+
 				<a href="https://twitter.com/@BasheirHassan" target="_blank" class="btn btn-primary" role="button"><i class="fa-brands fa-twitter"></i></a>
 				<button type="submit" form="form-captcha" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa-solid fa-save"></i></button>
 				<a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fa-solid fa-reply"></i></a></div>
@@ -42,9 +48,7 @@
 							<input type="text" name="module_product_chat_gemini_api_key" placeholder="{{ entry_api_key }}"
 								   id="input-api_key" class="form-control" value="{{ module_product_chat_gemini_api_key }}">
 							<span class="input-group-text" id="basic-addon2" onclick="testApi()" role="button">{{ help_get_model }}</span>
-							{% if error_api_key %}
-								<div class="text-danger" >{{ error_api_key }}</div>
-							{% endif %}
+
 						</div>
 
 						<div class="col-sm-10 input-group mb-3">

@@ -1,3 +1,7 @@
+
+
+
+
 function loadGemini(languageID, languageName, objectName, description, route) {
     if (!description) {
         alert(messages.help_active_extension);

@@ -19,7 +19,7 @@ $_['help_model_use']			= ' -  Model استخدام النماذج';
 $_['entry_status']		= 'Status';
 
 
-$_['entry_api_key']		= 'Gemini API key';
+$_['entry_api_key']		= 'Gemini API key - مفتاح';
 
 
 

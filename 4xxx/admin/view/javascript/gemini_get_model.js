@@ -9,6 +9,19 @@ $(document).ready(function() {
         $("#input-select-model-name").val(sel);
     })
 
+
+    $("#input-api_key").on('keyup', function () {
+        if ($(this).is(':empty')) {
+            $(".x-google").addClass('heart-beat');
+        } else {
+            $(".x-google").removeClass('heart-beat');
+        }
+        console.log($(this).val());
+    })
+
+
+
+
 })
 
 function listModels(API_KEY) {
