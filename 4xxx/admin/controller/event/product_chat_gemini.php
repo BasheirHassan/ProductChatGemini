@@ -26,6 +26,7 @@ class ProductChatGemini extends \Opencart\System\Engine\Controller
 
 
             $lang_help_setting_extension =  $this->language->get('help_setting_extension');
+            $lang_error_content =  $this->language->get('error_content');
             $lang_btn_run_all =  $this->language->get('btn_run_all');
             $lang_help_model_use =  $this->language->get('help_model_use');
 
@@ -53,7 +54,7 @@ class ProductChatGemini extends \Opencart\System\Engine\Controller
             $html .= '<script src="' . HTTP_CATALOG . '/extension/product_chat_gemini/admin/view/javascript/gemini.js"></script>' . PHP_EOL;
             $html .= "<script type='text/javascript'> 
               $(document).ready(function () {
-                    loadGeminiStatus('$json_languages','$model_config','$url_route','$lang_help_setting_extension');
+                    loadGeminiStatus('$json_languages','$model_config','$url_route','$lang_help_setting_extension','$lang_error_content');
               });
              </script>" . PHP_EOL;
 
@@ -84,6 +85,8 @@ class ProductChatGemini extends \Opencart\System\Engine\Controller
 
     public function get_data_from_gemini(): void
     {
+
+
         // Get the API key, and retrieve the user's prompt
         $this->load->language($this->path);
         $api_key = $this->config->get('module_product_chat_gemini_api_key');
@@ -115,7 +118,11 @@ class ProductChatGemini extends \Opencart\System\Engine\Controller
         if ($send_post) {
             $prompt = $this->request->post['gemini_content'];
             $json_data = json_encode(array('contents' => array(array('parts' => array(array('text' => $prompt))))));
-            $url = "https://generativelanguage.googleapis.com/v1beta/$select_model:generateContent?key=$api_key";
+            $url = sprintf(
+                'https://generativelanguage.googleapis.com/v1beta/%s:generateContent?key=%s',
+                $select_model,
+                $api_key
+            );
 
             // Send the request, and get the response
             $ch = curl_init($url);
@@ -123,26 +130,34 @@ class ProductChatGemini extends \Opencart\System\Engine\Controller
             curl_setopt($ch, CURLOPT_POSTFIELDS, $json_data);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+
             $response = curl_exec($ch);
-            curl_close($ch);
 
-
-
-            if(curl_errno($ch)) {
+            if (curl_errno($ch)) {
                 $err = 'Request Error: ' . curl_error($ch);
-                $message =$this->language->get('response_error') . $err .$response;
+                $message = $this->language->get('response_error') . ' ' . $err;
+                $status = false;
             } else {
-                $status=true;
-                // Parse the JSON response
+                $status = true;
                 $data = json_decode($response, true);
-                $text = $data['candidates'][0]['content']['parts'][0]['text'] ?? ( $status= false);
-                $message =$this->language->get('response_ok');
-                if (!$status){
-                    $message =$this->language->get('response_error') .PHP_EOL. $data['error']['message'];
-                }
 
+                if (json_last_error() !== JSON_ERROR_NONE) {
+                    $message = $this->language->get('response_error') . ' Invalid JSON response';
+                    $status = false;
+                } elseif (isset($data['error']['message'])) {
+                    $message = $this->language->get('response_error') . PHP_EOL . $data['error']['message'];
+                    $status = false;
+                } else {
+                    $text = $data['candidates'][0]['content']['parts'][0]['text'] ?? null;
+                    if ($text === null) {
+                        $message = $this->language->get('response_error') . ' Unexpected response structure';
+                        $status = false;
+                    } else {
+                        $message = $this->language->get('response_ok');
+                    }
+                }
             }
-// Close the cURL session
+
             curl_close($ch);
         }
 
