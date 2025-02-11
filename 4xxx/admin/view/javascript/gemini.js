@@ -125,7 +125,10 @@ function getGeminiAll() {
 
 
 function testApi() {
-    const apiKey = $("#input-api_key").val().trim(); if (!apiKey) { return; }
+    const apiKey = $("#input-api_key").val().trim(); if (!apiKey) {
+        alert("Please enter API key");
+        return;
+    }
 
     let apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`;
     let requestData = {
