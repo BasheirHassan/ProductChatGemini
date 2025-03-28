@@ -124,37 +124,34 @@ function getGeminiAll() {
 
 
 
+
 function testApi() {
-    const apiKey = $("#input-api_key").val().trim(); if (!apiKey) {
-        alert("Please enter API key");
+    const apiKey = $("#input-api_key").val().trim();
+    if (!apiKey) {
         return;
     }
 
-    let apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`;
+    let apiUrl = `https://generativelanguage.googleapis.com/v1beta/models?key=${apiKey}`;
     let requestData = {
-        contents: [{ role: "user", parts: [{ text: 'test Api' }] }]
+        contents: [{role: "user", parts: [{text: 'test Api'}]}]
     };
 
     $('#module_product_chat_gemini_select_model').loading('start');
 
     $.ajax({
         url: apiUrl,
-        type: "POST",
-        contentType: "application/json",
-        data: JSON.stringify(requestData),
-        success: function(response) {
+        type: "GET",
+        success: function (response) {
             $('#module_product_chat_gemini_select_model').loading('stop');
             $('#alertX').html('Successful!').removeClass('text-danger').addClass('text-success');
             listModels(apiKey);
         },
-        error: function(xhr, status, error) {
-            // alert(xhr.responseJSON.error.message);
-            $('#alertX').html(xhr.responseJSON.error.message).removeClass('text-success').addClass('text-danger');
-            $('#alertX').loading('stop');
-            setTimeout(()=>{
+        error: function (xhr) {
+            let errorMessage = xhr.responseJSON?.error?.message || "Unknown error occurred";
+            $('#alertX').html(errorMessage).removeClass('text-success').addClass('text-danger');
+            setTimeout(() => {
                 $('#alertX').html('');
-            },5000)
+            }, 5000);
         }
-    })
-
+    });
 }
